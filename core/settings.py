@@ -14,9 +14,7 @@ LOCAL_APPS = [
     'authHemis',
     'account',
     'university',
-    'dashboard',
-    'library',
-    'api'
+
 ]
 # Application definition
 
@@ -182,11 +180,11 @@ STATICFILES_FINDERS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/staticfiles/'  # String ko'rinishida bo'lishi kerak
+STATIC_URL = '/static/'  # String ko'rinishida bo'lishi kerak
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Updated to 'staticfiles' to avoid confusion  # Ushbu o'zgaruvchi quti manbasiga qarab aniqlanadi
-SASS_PROCESSOR_ROOT = BASE_DIR / 'staticfiles'  # Ushbu o'zgaruvchi quti manbasiga qarab aniqlanadi
+STATIC_ROOT = BASE_DIR / 'static'  # Updated to 'staticfiles' to avoid confusion  # Ushbu o'zgaruvchi quti manbasiga qarab aniqlanadi
+SASS_PROCESSOR_ROOT = BASE_DIR / 'static'  # Ushbu o'zgaruvchi quti manbasiga qarab aniqlanadi
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

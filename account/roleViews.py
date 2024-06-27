@@ -37,7 +37,7 @@ def create_group(request):
 
 def create_default_groups(request):
     # Grouplarni nomlari
-    group_names = ['Library', 'LibraryAdmin', 'Administrator', 'RTTM', 'Student', 'Employee']
+    group_names = ['Student', 'Employee', 'Admin']
 
     try:
         # Har bir group nomi uchun

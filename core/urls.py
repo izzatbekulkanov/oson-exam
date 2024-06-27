@@ -10,12 +10,10 @@ from core.views import set_language
 urlpatterns = [
     path('set-language/', set_language, name='set_language'),  # Tilni o'zgartirish
     path('admin/', admin.site.urls),
-    path('', include('dashboard.urls')),
     path('user/', include('account.urls')),
-    path('v1/', include('api.urls')),
+    path('', include('exam.urls')),
     path('hemis/', include('authHemis.urls')),  # Hemis autentifikatsiya sahifasi
-    path('edu/', include('university.urls')),  # Hemis autentifikatsiya sahifasi
-    path('lib/', include('library.urls')),  # Hemis autentifikatsiya sahifasi
+    path('edu/', include('university.urls')),  # Hemis autentifikatsiya sahifasi path('lib/', include('library.urls')),  # Hemis autentifikatsiya sahifasi
 
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     url(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
