@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load sass_tags %}
+
+{% block css %}
+    <!-- Plugins css start-->
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/vendors/animate.scss' %}">
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/vendors/select2.scss' %}">
+    <!-- Plugins css Ends-->
+{% endblock %}
+
+{% block content %}
+
+    <div class="page-body">
+        <div class="container-fluid">
+            {% include "layout/breadcrumb.html" %}
+            <div class="row project-cards">
+                {% include "applications/university/apiToken/components/projects-list-1.html" %}
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="tab-content" id="top-tabContent">
+                                {% include "applications/university/apiToken/components/projects-list-2.html" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalfat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">Universitet & API token</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form> {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="col-form-label" for="recipient-name">API token:</label>
+                            <input class="form-control" type="text" id="apiToken">
+                        </div>
+                        <div class="select2-drpdwn">
+                            <div class="mb-2">
+                                <div class="col-form-label">Universitetni tanlang</div>
+                                <select class="js-example-placeholder-multiple col-sm-12" id="university-date">
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Yopish</button>
+                    <button class="btn btn-primary" type="button" onclick="updateApiToken()">Saqlash</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block scriptcontent %}
+
+    <!-- Plugins JS start-->
+    <script src="{% static 'assets/js/typeahead/handlebars.js' %}"></script>
+    <script src="{% static 'assets/js/typeahead/typeahead.bundle.js' %}"></script>
+    <script src="{% static 'assets/js/typeahead/typeahead.custom.js' %}"></script>
+    <script src="{% static 'assets/js/typeahead-search/handlebars.js' %}"></script>
+    <script src="{% static 'assets/js/typeahead-search/typeahead-custom.js' %}"></script>
+    <script src="{% static 'assets/js/tooltip-init.js' %}"></script>
+    <script src="{% static 'assets/js/select2/select2.full.min.js' %}"></script>
+    <script>
+        function displayUniversityData() {
+            // AJAX so'rovini yuborish
+            $.ajax({
+            url: '{% url 'get_universities_token_data' %}',
+            type: 'GET',
+            success: function(response){
+                var universities = response.universities;
+                var tableBody = $('#university-table-body');
+                for (var i = 0; i < universities.length; i++){
+                    var university = universities[i];
+                    var row = '<tr>' +
+                                '<td>' + (i + 1) + '</td>' +
+                                '<td>' + university.name + '</td>' +
+                                '<td>' + university.api_token + '</td>' +
+                                '<td>' + university.api_url + '</td>' +
+                                '<td class="w-0">' +
+                                    '<div class="media-body icon-state switch-outline">' +
+                                        '<label class="switch">' +
+                                            '<input type="checkbox" ' + (university.is_active ? 'checked' : '') + ' onchange="updateUniversityStatus(' + university.code + ', this.checked ? true : false)">' +
+                                            '<span class="switch-state bg-primary"></span>' +
+                                        '</label>' +
+                                    '</div>' +
+                                '</td>' +
+                            '</tr>';
+                    tableBody.append(row);
+                }
+            },
+            error: function(error){
+                console.log(error);
+            }
+        });
+        }
+        
+        
+
+        displayUniversityData()
+        
+        function updateUniversityStatus(universityCode, isActive) {
+            // AJAX so'rovini yuborish
+            $.ajax({
+                url: '{% url 'update_university_status' %}',  // O'zgartirilgan URL ni qo'shing
+                type: 'POST',  // POST so'rovini ishlatamiz
+                data: {
+                    'university_code': universityCode,
+                    'is_active': isActive
+                },
+                success: function(response){
+                    // Agar muvaffaqiyatli bo'lsa, konsolga xabar chiqaramiz
+                    console.log(response);
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            });
+        }
+
+        function fillUniversitySelect() {
+            $.ajax({
+                url: '{% url 'get_universities_data' %}', // Ma'lumotlar uchun URL
+                type: 'GET',
+                success: function (response) {
+                    var universities = response.universities;
+                    var select = $('#university-date'); // select elementini tanlab olamiz
+                    select.empty(); // selectni tozalaymiz
+                    // Har bir universitet uchun option qo'shamiz
+                    $.each(universities, function (index, university) {
+                        select.append('<option value="' + university.code + '">' + university.name + '</option>');
+                    });
+                    // Tanlovga qidiruvni qo'shamiz
+                    select.select2({
+                        placeholder: 'Universitetni tanlang',
+                        allowClear: true,
+                        width: '100%', // to'liq ekran eniga moslashtirish
+                        minimumInputLength: 1 // Arama minimum uzunluğu, 1 karakter
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    // Xatolik bo'lganda ma'lumotni qanday ishlatish haqida fikr bering
+                }
+            });
+        }
+
+        // Dokument yuklandiğida universitetlarni olish uchun funksiyamizni chaqiramiz
+        $(document).ready(function () {
+            fillUniversitySelect();
+
+            // Tanlov elementini select2 bilan o'rnating
+            $('#university-date').select2({
+                placeholder: 'Universitetni tanlang',
+                allowClear: true,
+                width: '100%', // to'liq ekran eniga moslashtirish
+                minimumInputLength: 1 // Arama minimum uzunluğu, 1 karakter
+            });
+        });
+
+        function updateApiToken() {
+            // CSRF tokenni olish
+            var csrftoken = getCookie('csrftoken');
+
+            // Modal oynadan universitet kodini, is_active holatini va yangi API tokenni olish
+            var universityCode = $('#university-date').val();
+            var apiToken = $('#apiToken').val();
+
+            // JSON formatida malumotlarni tayyorlash
+            var requestData = {
+                'university_code': universityCode,
+                'api_token': apiToken
+            };
+
+            // AJAX so'rovini yuborish
+            $.ajax({
+                url: '{% url 'update_api_token_view' %}',
+                type: 'POST',
+                data: JSON.stringify(requestData),
+                contentType: 'application/json',
+                dataType: 'json',
+                beforeSend: function (xhr, settings) {
+                    // CSRF tokenini so'rovga qo'shish
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+                },
+                success: function (response) {
+                    // Muvaffaqiyatli javob qaytarilganida modalni yopish
+                    $('#exampleModalfat').modal('hide');
+                    // Muvaffaqiyatli amalga oshirilganda xabar chiqarish
+                    console.log(response.message);
+
+                    // Formani tozalash
+                    $('#apiToken').val('');
+                    displayUniversityData();
+                },
+                error: function (xhr, status, error) {
+                    // Xatolik yuz berish
+                    console.log('Xatolik: ' + xhr.responseText);
+                }
+            });
+        }
+
+        // CSRF tokenini olish uchun funksiya
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // CSRF tokenni qidirish
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // Saqlash tugmasi bosilganda updateApiToken funksiyasini chaqirish
+        $(document).ready(function () {
+            $('#save-button').click(function () {
+                updateApiToken();
+            });
+        });
+    </script>
+    <script src="{% static 'assets/js/select2/select2-custom.js' %}"></script>
+    <script src="{% static 'assets/js/tooltip-init.js' %}"></script>
+    <!-- Plugins JS Ends-->
+{% endblock %}

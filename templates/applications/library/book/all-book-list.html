@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load sass_tags %}
+{% load i18n %}
+
+{% block css %}
+    <!-- Plugins css start-->
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/vendors/select2.scss' %}">
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/vendors/owlcarousel.scss' %}">
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/vendors/range-slider.scss' %}">
+    <!-- Plugins css Ends-->
+{% endblock %}
+
+{% block content %}
+
+    <div class="page-body">
+        <div class="container-fluid product-wrapper">
+            {% include "layout/breadcrumb.html" %}
+
+
+            {% include "applications/library/book/components/all-book-list.html" %}
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scriptcontent %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.6/pdfobject.min.js"></script>
+
+    <script>
+        // Kitob ma'lumotlarini olish uchun funksiya
+        function getBookDetails(bookId) {
+            // AJAX so'rovni yuborish
+            $.ajax({
+                url: '{% url 'get_book_details' %}',  // Server tomonidan ma'lumotlar olish uchun URL
+                method: 'GET',
+                data: {'book_id': bookId},  // So'rov ma'lumotlari
+                success: function (response) {
+                    // Modal oynasiga kitob ma'lumotlarini joylash
+                    fillDataModal(response)
+                },
+                error: function (error) {
+                    console.log('Error:', error);
+                }
+            });
+        }
+
+        function fillDataModal(data) {
+            console.log(data);
+
+            var imageUrl = data.image ? data.image : '{% static "assets/images/dashboard-2/no-content.png" %}';
+
+            // Rasmni chiqarish
+            $('.product-img img').attr('src', imageUrl);
+
+            // Kitob nomi cheklangan
+            var title = data.title.split(' ').slice(0, 7).join(' ');
+            if (data.title.split(' ').length > 7) {
+                title += '...';
+            }
+            $('#bookTitle').text(title);
+
+
+            // BBK nomi va kodi
+            $('#bbkName').html(data.bbk ? data.bbk : '');
+            $('#bbkCode').html(data.bbkCode ? data.bbkCode : '');
+            // Kitobning avtorlari
+            $('#bookDetails').innerHTML = ''
+            $('#bookDetails').html('<div class="col-6"><span> {% trans "Book authors" %}:</span></div><div class="col-6 text-success">' + data.authors.split(', ')[0] + '...</div>');
+            // Kitobning Mualliflik belgisi
+            $('#bookDetails').append('<div class="col-6"><span>{% trans "Copyright symbol" %}Mualliflik belgisi:</span></div><div class="col-6 text-success">' + data.author_code + '</div>');
+
+
+            // Kitobning sahifalar soni
+            $('#bookDetails').append('<div class="col-6"><span>{% trans "Number of pages" %}:</span></div><div class="col-6 text-success">' + data.pages + '</div>');
+            // Kitobning sahifalar soni
+
+            // Kitob soni
+            $('#bookDetails').append('<div class="col-6"><span>{% trans "Kitob soni" %}:</span></div><div class="col-6 text-success">' + data.quantity + '</div>');
+            // Kitob nashr qilingan yili
+            $('#bookDetails').append('<div class="col-6"><span>{% trans "Kitob nashr qilingan yili" %}Kitob nashr qilingan yili:</span></div><div class="col-6 text-success">' + data.publication_year + '-yil</div>');
+            // Kitob nashriyot nomi
+            var publisher = data.publisher;
+            if (publisher.length > 30) {
+                publisher = publisher.substring(0, 3) + '...';
+            }
+            $('#bookDetails').append('<div class="col-6"><span>{% trans "Nashriyot nomi" %}Nashriyot nomi:</span></div><div class="col-6 text-success">' + publisher + '</div>');
+            // ISBN
+            $('#bookDetails').append('<div class="col-6"><span>{% trans "ISBN" %}:</span></div><div class="col-6 text-success">' + data.isbn + '</div>');
+
+            $('#bookDetails').append('<div class="col-6"><span>{% trans "Kitob haqida" %}Kitob haqida:</span></div><div class="col-6 text-success">' + truncateText(data.annotation, 20) + '</div>');
+            $('#bookDetails').append(`
+                <div class="col-12 mt-2">
+                    <button class="btn btn-outline-primary w-100" onclick="openPdfViewerModal('${data.file}')">Ko'rish
+                        <i class="icofont icofont-file-pdf text-danger"></i>
+                    </button>
+                </div>
+            `);
+            // Kitobning nusxalari
+            // Kitob nusxalarini chiqarish
+            $('#bookCopies').html('');
+            if (data.copies.length > 0) {
+                data.copies.forEach((copy, index) => {
+                    $('#bookCopies').append('<tr>' +
+                        '<th scope="row">' + (index + 1) + '</th>' +
+                        '<td>' + copy.inventory_number + '</td>' +
+                        '<td>' + (copy.library ? copy.library : '{% trans "Noma’lum kutubxona" %}') + '</td>' +
+                        '<td>' + (copy.haveStatus ? copy.haveStatus : '{% trans "Noma’lum xolat" %}') + '</td>' +
+                        '</tr>');
+                });
+            } else {
+                $('#bookCopies').append('<tr><td colspan="4">{% trans "Kitob nusxalari mavjud emas" %}</td></tr>');
+            }
+        }
+
+        /// Function to open PDF Viewer modal
+        function openPdfViewerModal(pdfUrl) {
+            // Modalni ochish
+            $('#pdfViewerModal').modal('show');
+
+            // PDF faylini yuklab olish
+            fetch(pdfUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    const objectUrl = URL.createObjectURL(blob);
+                    // PDF faylini ko'rsatish uchun iframe yaratish
+                    var iframe = document.createElement('iframe');
+                    iframe.src = objectUrl;
+                    iframe.width = '100%';
+                    iframe.height = '100%';
+                    iframe.style.border = 'none';
+
+                    // Modal oynasiga iframe ni qo'shish
+                    var modalBody = document.querySelector('#pdfViewerModal .modal-body');
+                    modalBody.innerHTML = ''; // Avvalgi kontentni o'chirish
+                    modalBody.appendChild(iframe);
+                })
+                .catch(error => console.error(' {% trans "Faylni yuklab olishda xatolik yuz berdi" %}:', error));
+        }
+
+        function truncateText(text, wordLimit) {
+            var words = text.split(' ');
+            if (words.length > wordLimit) {
+                return words.slice(0, wordLimit).join(' ') + '...';
+            }
+            return text;
+        }
+    </script>
+
+
+
+
+    <!-- Plugins JS start-->
+    <script src="{% static 'assets/js/range-slider/ion.rangeSlider.min.js' %}"></script>
+    <script src="{% static 'assets/js/range-slider/rangeslider-script.js' %}"></script>
+    <script src="{% static 'assets/js/touchspin/vendors.min.js' %}"></script>
+    <script src="{% static 'assets/js/touchspin/touchspin.js' %}"></script>
+    <script src="{% static 'assets/js/touchspin/input-groups.min.js' %}"></script>
+    <script src="{% static 'assets/js/owlcarousel/owl.carousel.js' %}"></script>
+    <script src="{% static 'assets/js/select2/select2.full.min.js' %}"></script>
+    <script src="{% static 'assets/js/select2/select2-custom.js' %}"></script>
+    <script src="{% static 'assets/js/tooltip-init.js' %}"></script>
+    <script src="{% static 'assets/js/product-tab.js' %}"></script>
+    <!-- Plugins JS Ends-->
+{% endblock %}

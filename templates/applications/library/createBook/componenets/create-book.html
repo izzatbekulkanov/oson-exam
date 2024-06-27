@@ -1,0 +1,218 @@
+{% load static %}
+{% load sass_tags %}
+<!-- HTML Form Structure -->
+<div class="row card-body mt-3 pt-3 mb-3 pb-3">
+    <div class="col-sm-6 ">
+        <label class="form-label" for="bbk-book">BBK ni tanlang</label>
+        <select class="form-select" id="bbk-book" required disabled>
+            <option value="" selected disabled>Tanlang...</option>
+        </select>
+    </div>
+</div>
+
+<div class="row d-none" id="add-book-form-class">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form theme-form">
+                    <div id="form-errors" class="text-danger mb-3"></div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <label class="form-label" for="book-type-book">Kitob turini tanlang</label>
+                                <select class="form-select" id="book-type-book" required>
+                                    <option value="" selected disabled>Tanlang...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Kitob Sarlavhasi</label>
+                                <input type="text" class="form-control" id="title" placeholder="Kitob nomi *" required
+                                       name="title">
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="mb-3">
+                                <label for="authors" class="form-label">Muallif(lar)</label>
+                                <input type="text" class="form-control" id="authors" name="authors"
+                                       placeholder="Muallif(lar)ni [,] vergul bilan ajratib yozing">
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="mb-3">
+                                <label for="authorCode" class="form-label">Mualliflik kodi</label>
+                                <input type="text" class="form-control" id="authorCode" name="authorCode"
+                                       placeholder="M.(Kodi)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="quantity" class="form-label">Kitob Beti</label>
+                                <input type="number" class="form-control" id="page" name="page"
+                                       placeholder="Kitob beti">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-3">
+                                <label for="language" class="form-label">Kitob Tili</label>
+                                <select id="language" class="form-select" name="language">
+                                    <option value="" disabled selected>Kitob tili tanlang</option>
+                                    <option value="uz">O'zbek (lotin)</option>
+                                    <option value="oz">O'zbek (krill)</option>
+                                    <option value="qr">Qoraqalpoq</option>
+                                    <option value="en">Ingliz</option>
+                                    <option value="tr">Turk</option>
+                                    <option value="fr">Fransuz</option>
+                                    <option value="ru">Rus</option>
+                                    <option value="de">Nemis</option>
+                                    <option value="zh">Xitoy</option>
+                                    <option value="es">Ispan</option>
+                                    <option value="ko">Koreys</option>
+                                    <option value="kk">Qozoq</option>
+                                    <option value="ky">Qirg'iz</option>
+                                    <option value="tg">Tojik</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="mb-3">
+                                <label for="publisher_city" class="form-label">Nashr Qilingan Shahar</label>
+                                <input type="text" class="form-control" id="publisher_city"
+                                       placeholder="nashr qilingan yili" name="publisher_city">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-3">
+                                <label for="publication_year" class="form-label">Nashr Qilingan Yili</label>
+                                <input type="number" class="form-control" id="publication_year" name="publication_year"
+                                       placeholder="nashr qilingan yili">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="publisher" class="form-label">Kitob nashriyoti</label>
+                                <input type="text" class="form-control" id="publisher" name="publisher"
+                                       placeholder="Kitob nashriyoti">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-3">
+                                <label for="adad" class="form-label">Adadi</label>
+                                <input type="number" class="form-control" id="adad" name="adad" placeholder="Adadi">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="isbn" class="form-label">Kitob ISBN raqami</label>
+                                <input type="text" class="form-control" id="isbn" name="isbn"
+                                       placeholder="Kitob ISBN raqami">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-3">
+                                <label for="inventar_seriya" class="form-label">Inventar</label>
+                                <input type="text" class="form-control" id="inventar_seriya" name="inventar"
+                                       placeholder="Belgisi  inventar raqami" value="">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-3">
+                                <label for="quantity" class="form-label">Kitob Soni (nusxada)</label>
+                                <input type="number" class="form-control" id="quantity" name="quantity"
+                                       placeholder="Kitob Soni (nusxada)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="annotation" class="form-label">Qo'shimcha Ma'lumotlar (annotatsiya)</label>
+                                <textarea class="form-control" id="annotation" rows="3"
+                                          placeholder="Kitob haqida qo'shimcha ma'lumotlar"
+                                          name="annotation"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="container mt-5">
+                                <button class="file-upload-btn" type="button"
+                                        onclick="$('.file-upload-input').trigger('click')">Rasm qo'shish
+                                </button>
+                                <div class="image-upload-wrap">
+                                    <input id="image" class="file-upload-input" type='file' onchange="readURL(this);"
+                                           accept="image/*"/>
+                                    <div class="drag-text">
+                                        <h3>Kitob rasmini yuklang</h3>
+                                    </div>
+                                </div>
+                                <div class="file-upload-content">
+                                    <img class="file-upload-image" src="#" alt="your image"/>
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUpload()" class="remove-image">Olib
+                                            tashlash <span class="image-title">Uploaded Image</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="container mt-5 mb-5">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="customFile"
+                                                   accept=".pdf,.doc,.docx">
+                                            <label class="custom-file-label" for="customFile">PDF yoki Word faylni
+                                                tanlang...</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <p id="fileInfo"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="form-errors" class="text-danger mb-3"></div> <!-- Xatolarni chiqarish uchun div -->
+                    <div class="row">
+                        <div class="col">
+                            <div class="text-end">
+                                <button id="saveBook" class="btn btn-success me-3 w-25">Saqlash</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="component">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Oxirgi kiritilgan kitoblar</h5>
+                </div>
+                <div class="card-body">
+
+                    <div class="owl-carousel owl-theme row" id="owl-carousel-13">
+                        <!-- Carousel itemlari bu yerga chiqadi -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    
+</div>

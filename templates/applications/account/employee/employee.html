@@ -1,0 +1,298 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load sass_tags %}
+
+{% block css %}
+    <!-- Plugins css start-->
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/vendors/select2.scss' %}">
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/vendors/datatables.scss' %}">
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/vendors/owlcarousel.scss' %}">
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/vendors/rating.scss' %}">
+    <!-- Plugins css Ends-->
+{% endblock %}
+
+{% block content %}
+
+    <div class="page-body">
+        <div class="container-fluid">
+            {% include "layout/breadcrumb.html" %}
+
+            {% include "applications/account/employee/components/keyboard-activation.html" %}
+
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+    <script>
+        // "Tableni to'ldirish" funksiyasi
+        document.addEventListener('DOMContentLoaded', function () {
+            // Sahifalash uchun elementlar
+            const pagination = document.getElementById('pagination');
+            const paginationPrevious = document.getElementById('pagination-previous');
+            const paginationNext = document.getElementById('pagination-next');
+            const paginationCurrentPage = document.getElementById('pagination-current-page');
+            const paginationTotalPages = document.getElementById('pagination-total-pages');
+            const editButtons = document.querySelectorAll('.edit-user-btn');
+            
+            editButtons.forEach(button => {
+                button.onclick = function () {
+                    alert('asdasdasd')
+                    const userId = this.getAttribute('data-user-id');
+                    window.location.href = `/user/employees/${userId}/`;
+                };
+            });
+            // Asosiy ma'lumotlar
+            let currentPage = 1;
+            let totalPages = 1;
+
+            // Saqlash uchun funksiya
+            function updateTable(data) {
+                const tableBody = document.querySelector('#employee-table tbody');
+                tableBody.innerHTML = ''; // Clear existing data
+                data.forEach((user, index) => {
+                    const row = document.createElement('tr');
+                    row.classList.add('border-bottom-secondary');
+                    row.innerHTML = `
+                <th scope="row">${index + 1}</th>
+                <td><img class="img-30 me-2" src="${user.image ? user.image : '../assets/images/user/1.jpg'}" alt="profile"> ${user.full_name} </td>
+                <td>${user.university_name || '<span class="badge badge-light-danger">Kiritilmagan</span>'}</td>
+                <td>${user.birth_date || '<span class="badge badge-light-danger">Kiritilmagan</span>'}</td>
+                <td>${user.department_name || '<span class="badge badge-light-danger">Kiritilmagan</span>'}</td>
+                <td>${user.staffPosition_name || '<span class="badge badge-light-danger">Kiritilmagan</span>'}</td>
+                <td>${user.now_role || '<span class="badge badge-light-danger">Kiritilmagan</span>'}</td>
+                <td>${user.created_at}</td>
+                <td>${user.updated_at}</td>
+                <td>${user.is_active}</td>
+                <td>
+                    <a href="/user/employees/${user.id}/" class="btn btn-pill btn-light btn-air-light edit-user-btn" role="button">
+                        <i class="icofont icofont-edit"></i>
+                    </a>
+                </td>
+            `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            // Qo'shimcha funksiyalar
+
+
+            // Pagination o'zgaruvchilarini yangilash
+            function updatePagination() {
+                paginationCurrentPage.textContent = currentPage;
+                paginationTotalPages.textContent = totalPages;
+                // Oldingi tugmani o'rnatish
+                if (currentPage === 1) {
+                    paginationPrevious.classList.add('disabled');
+                } else {
+                    paginationPrevious.classList.remove('disabled');
+                }
+                // Keyingi tugmani o'rnatish
+                if (currentPage === totalPages) {
+                    paginationNext.classList.add('disabled');
+                } else {
+                    paginationNext.classList.remove('disabled');
+                }
+            }
+
+            // Sahifalash uchun malumotlarni olish
+            function fetchData(page) {
+                fetch(`{% url 'get_employee_users' %}?page=${page}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        updateTable(data);
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            // Oldingi sahifa tugmasi
+            paginationPrevious.addEventListener('click', function () {
+                if (currentPage > 1) {
+                    currentPage--;
+                    fetchData(currentPage);
+                    updatePagination();
+                }
+            });
+
+            // Keyingi sahifa tugmasi
+            paginationNext.addEventListener('click', function () {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    fetchData(currentPage);
+                    updatePagination();
+                }
+            });
+
+            // Boshlang'ich sahifa yuklashi
+            fetchData(currentPage);
+            updatePagination();
+        });
+
+        // "Kutubxona formasini to'ldirish" funksiyasi
+        $(document).ready(function () {
+            // Universitetlarni olish va select dropdown ni to'ldirish funksiyasi
+            function fetchAndPopulateUniversities() {
+                $.ajax({
+                    url: '{% url 'get_universities_token_data' %}',
+                    type: 'GET',
+                    success: function (response) {
+                        var universities = response.universities;
+                        var select = $('#employeeUniversity');
+                        select.empty();
+                        select.append($('<option>').text('Tanlang...').attr('disabled', true).attr('selected', true));
+                        $.each(universities, function (index, university) {
+                            select.append($('<option>').attr('value', university.code).text(university.name));
+                        });
+
+                        // Select2 ni boshlang
+                        select.select2({
+
+                            placeholder: 'Universitetni tanlang', // Placeholder matni
+                            width: '100%', // To'la ekranlik
+                            dropdownAutoWidth: true, // Dropdownning avto-uzunligi
+                            allowClear: true, // Tozalash tugmasi
+                            language: 'uz', // Til
+                            // O'zgaruvchilarga qo'shimcha qiymatlar
+                            dropdownParent: $('#exampleModalgetbootstrap'), // Dropdown ota-oyini belgilash
+                            closeOnSelect: true, // Tanlanganda modalni yopish
+                            // Va boshqalar...
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Universitetlarni olishda xatolik:', error);
+                    }
+                });
+            }
+
+            // Modal ochilganda funksiyani chaqirish
+            $('#exampleModal').on('show.bs.modal', function () {
+                fetchAndPopulateUniversities();
+            });
+        });
+
+        // Forma universitetni to'ldirish funksiyasi
+        $(document).ready(function () {
+            // Universitetlarni olish va select dropdown ni to'ldirish funksiyasi
+            function fetchAndPopulateUniversities() {
+                $.ajax({
+                    url: '{% url 'get_universities_token_data' %}',
+                    type: 'GET',
+                    success: function (response) {
+                        var universities = response.universities;
+                        var select = $('#employeeUniversity');
+                        select.empty();
+                        select.append($('<option>').text('Tanlang...').attr('disabled', true).attr('selected', true));
+                        $.each(universities, function (index, university) {
+                            select.append($('<option>').attr('value', university.code).text(university.name));
+                        });
+
+                        // Select2 ni boshlang
+                        select.select2({
+
+                            placeholder: 'Universitetni tanlang', // Placeholder matni
+                            width: '100%', // To'la ekranlik
+                            dropdownAutoWidth: true, // Dropdownning avto-uzunligi
+                            allowClear: true, // Tozalash tugmasi
+                            language: 'uz', // Til
+                            // O'zgaruvchilarga qo'shimcha qiymatlar
+                            dropdownParent: $('#exampleModal'), // Dropdown ota-oyini belgilash
+                            closeOnSelect: true, // Tanlanganda modalni yopish
+                            // Va boshqalar...
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Universitetlarni olishda xatolik:', error);
+                    }
+                });
+            }
+
+            // Modal ochilganda funksiyani chaqirish
+            $('#exampleModal').on('show.bs.modal', function () {
+                fetchAndPopulateUniversities();
+            });
+        });
+
+        // Yangi xodim saqlash funksiyasi
+        $(document).ready(function () {
+            $('#saveEmployeeBtn').click(function () {
+                var username = $('#validationCustom01').val();
+                var password = $('#password').val();
+                var firstName = $('#first_name').val();
+                var lastName = $('#second_name').val();
+                var email = $('#email').val();
+                var universityId = $('#employeeUniversity').val();
+
+                // CSRF tokenini olish
+                var csrftoken = getCookie('csrftoken');
+
+                $.ajax({
+                    url: '{% url 'create_employee' %}', // Endpoint manzili
+                    type: 'POST',
+                    data: {
+                        'validationCustom01': username,
+                        'password': password,
+                        'first_name': firstName,
+                        'second_name': lastName,
+                        'email': email,
+                        'employeeUniversity': universityId
+                    },
+                    beforeSend: function (xhr, settings) {
+                        // CSRF tokenini so'rovga qo'shish
+                        xhr.setRequestHeader('X-CSRFToken', csrftoken);
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            // Yangi foydalanuvchi muvaffaqiyatli yaratildi
+                            alert(response.message);
+                            // Tarqatish kerak bo'lsa
+                            location.reload(); // Profil sahifasiga yo'naltirish
+                        } else {
+                            // Muvaffaqiyatsizlik haqida xabar
+                            alert('Foydalanuvchi yaratishda xatolik yuz berdi.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Foydalanuvchi yaratishda xatolik:', error);
+                        // Muvaffaqiyatsizlik haqida xabar
+                        alert('Foydalanuvchi yaratishda xatolik yuz berdi.');
+                    }
+                });
+            });
+        });
+
+        // CSRF tokenini qaytarish funksiyasi
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+
+    <!-- Plugins JS start-->
+    <script src="{% static 'assets/js/select2/select2.full.min.js' %}"></script>
+    <script src="{% static 'assets/js/select2/select2-custom.js' %}"></script>
+
+
+    <script src="{% static 'assets/js/form-validation-custom.js' %}"></script>
+    <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/js/rating/jquery.barrating.js' %}"></script>
+    <script src="{% static 'assets/js/rating/rating-script.js' %}"></script>
+    <script src="{% static 'assets/js/owlcarousel/owl.carousel.js' %}"></script>
+    <script src="{% static 'assets/js/product-list-custom.js' %}"></script>
+    <script src="{% static 'assets/js/tooltip-init.js' %}"></script>
+    <!-- Plugins JS Ends-->
+
+{% endblock %}

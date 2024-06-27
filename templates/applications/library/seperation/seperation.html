@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load sass_tags %}
+{% block css %}
+<!-- Plugins css start-->
+<link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/vendors/datatables.scss' %}">
+<!-- Plugins css Ends-->
+
+    <style>
+    .small-width {
+        width: 5%; /* Kichik kenglik */
+        text
+    }
+    .col-4 {
+        width: 20%; /* Taxminan to'rtdan bir qism */
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="page-body">
+    <div class="container-fluid">
+        {% include "layout/breadcrumb.html" %}
+        {% include "applications/library/seperation/components/components1.html" %}
+        {% include "applications/library/seperation/components/table1.html" %}
+    </div>
+</div>
+{% endblock %}
+{% block scriptcontent %}
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('{% url 'get_not_accepted_book_copies' %}')
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById('table-body');
+            let rowIndex = 1;
+
+            for (const bbkName in data) {
+                for (const bookTypeName in data[bbkName]) {
+                    const books = data[bbkName][bookTypeName];
+                    const bbkCell = `<td class="f-light col-4">${bbkName}</td>`;
+                    const bookTypeCell = `<td class="f-light col-4">${bookTypeName}</td>`;
+                    const countCell = `<td class="f-light">${books.length}</td>`;
+
+                    // Create a row for the book type and BBK with the count of book copies
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="f-light small-width">${rowIndex++}</td>
+                        ${bookTypeCell}
+                        ${bbkCell}
+                        ${countCell}
+                        <td class="f-light"><button class="btn" > Tahrirlash</button></td> <!-- Add empty cells for alignment -->
+
+                    `;
+                    tableBody.appendChild(row);
+                }
+            }
+        })
+        .catch(error => console.error('Error fetching data:', error));
+});
+</script>
+
+<!-- Plugins JS start-->
+<script src="{% static 'assets/js/counter/jquery.waypoints.min.js'%}"></script>
+<script src="{% static 'assets/js/counter/jquery.counterup.min.js'%}"></script>
+<script src="{% static 'assets/js/counter/counter-custom.js'%}"></script>
+<script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js'%}"></script>
+<script src="{% static 'assets/js/support-ticket-custom.js'%}"></script>
+<script src="{% static 'assets/js/tooltip-init.js'%}"></script>
+<!-- Plugins JS Ends-->
+{% endblock %}

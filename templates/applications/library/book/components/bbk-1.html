@@ -1,0 +1,65 @@
+{% load static %}
+{% load sass_tags %}
+{% load i18n %}
+<div class="product-grid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="product-sidebar">
+                <div class="filter-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="mb-0 f-w-600">{{ book_type.name }}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product-wrapper-grid">
+        <div class="row" id="book-bbk-container">
+            {% if bbks.exists %}
+                {% for bbk in bbks %}
+                    <div class="col-xl-2 col-sm-6 xl-4">
+                        <div class="card">
+                            <div class="product-box">
+                                <div class="product-img">
+                                    <div class="ribbon ribbon-success">{% trans "Yangi" %}</div>
+                                    <img class="img-fluid" src="{% static 'assets/images/default/bbk-cover.jpeg' %}"
+                                         alt="">
+                                    <div class="product-hover">
+                                        <ul>
+                                            <li>
+                                                <a class="btn" type="button" href="{% url 'all_book_list' %}?bbk={{ bbk.id }}"><i
+                                                        class="icon-eye"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="product-details h-20">
+                                    <h4>{{ bbk.name }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="card purchase-card discover"><img class="img-fluid"
+                                                              src="{% static 'assets/images/dashboard-2/no-content.png' %}"
+                                                              alt="vector discover">
+                    <div class="card-body pt-3">
+                        <h5 class="mb-1">{% trans "Topilmadi" %}</h5>
+                        <p class="f-light">Kitob kategoriyasiga tegishli BBK kiritilmagan </p><a
+                            class="purchase-btn btn btn-hover-effect btn-primary f-w-500" href="{% url 'book_list' %}">{% trans "Kategoriyalar" %}</a>
+                    </div>
+                </div>
+
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+</div>
+</div>
+
+<!-- Sizning JS fayllaringizni shu yerga qo'shing -->

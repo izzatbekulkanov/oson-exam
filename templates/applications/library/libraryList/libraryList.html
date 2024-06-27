@@ -1,0 +1,373 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load sass_tags %}
+
+{% block css %}
+    <!-- Plugins css start-->
+
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/vendors/datatables.scss' %}">
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/vendors/select2.scss' %}">
+    <!-- Plugins css Ends-->
+{% endblock %}
+
+{% block content %}
+
+    <div class="page-body">
+        <div class="container-fluid">
+            {% include "layout/breadcrumb.html" %}
+
+            {% include "applications/library/libraryList/components/library-1.html" %}
+            {% include "applications/library/libraryList/components/library-2.html" %}
+            {% include "applications/library/libraryList/components/library-3.html" %}
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="add_big_librarian" tabindex="-1" role="dialog" aria-labelledby="add_big_librarian"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-toggle-wrapper">
+                        <h4 class="text-center pb-2">Kutubxona rahbarini qo'shish</h4>
+                        <p class="text-center">Universitet kutubxona rahbarini tanlang.</p>
+                        <select id="bigLibrarianSelect" class="form-control">
+                            <!-- Library admin foydalanuvchilar ro'yxati -->
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                        <button id="saveChangesButton" class="btn btn-primary" type="button">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="add_small_librarian" tabindex="-1" role="dialog" aria-labelledby="add_big_librarian"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form id="smallLibrarianForm" method="POST">
+                {% csrf_token %}
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p>Kutubxona xodimlarini tanlang.</p>
+                        <select class="js-example-placeholder-multiple col-sm-12" id="smallLibrarianSelect"
+                                multiple="multiple">
+                            <!-- Optionlar AJAX orqali yuklanadi -->
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                        <button id="saveSmallButton" class="btn btn-primary" type="button">Save changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+
+    <script>
+        $(document).on('click', '.library-link', function (event) {
+            event.preventDefault();
+            selectedLibraryId = $(this).data('library-id');
+            $('#add_small_librarian').modal('show');
+
+            // AJAX orqali small librarian foydalanuvchilarni olish
+            $.ajax({
+                url: '{% url "get_small_librarians" %}', // URL ni mos ravishda almashtiring
+                method: 'GET',
+                data: {library_id: selectedLibraryId}, // Tanlangan kutubxona ID sini jo'natish
+                success: function (data) {
+                    var select = $('#smallLibrarianSelect');
+                    select.empty(); // Oldingi ma'lumotlarni tozalash
+
+                    // Tanlov ro'yxatini "select2" bilan yaratish
+                    var librarians = data.library_admins;
+                    for (var i = 0; i < librarians.length; i++) {
+                        var option = new Option(librarians[i].full_name, librarians[i].id, false, librarians[i].selected);
+                        select.append(option);
+                    }
+
+                    // select2 pluginini tanlangan select elementiga qo'llash
+                    select.select2();
+                }
+            });
+        });
+
+        $('#saveSmallButton').click(function () {
+            var selectedLibrarians = $('#smallLibrarianSelect').val(); // Tanlangan foydalanuvchilar ro'yxati
+            console.log(selectedLibrarians, selectedLibraryId);
+            $.ajax({
+                url: '{% url "assign_small_librarian" %}',
+                method: 'POST',
+                contentType: 'application/json', // Ma'lumotlarni JSON formatida yuborish
+                headers: {
+                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val() // CSRF tokenni header sifatida yuborish
+                },
+                data: JSON.stringify({
+                    'library_id': selectedLibraryId,
+                    'small_librarian_id': selectedLibrarians // Tanlangan foydalanuvchilar ro'yxati
+                }),
+                success: function () {
+                    $('#add_small_librarian').modal('hide');
+                    location.reload();
+                }
+            });
+        });
+
+
+    </script>
+
+    <script>
+        // "Kutubxonani saqlash" funksiyasi
+        $(document).ready(function () {
+            $('#saveLibrary').click(function (event) {
+                event.preventDefault(); // Boshqa sahifaga otishni to'xtatish
+
+                // Ma'lumotlarni to'g'ri formatlash
+                var formData = {
+                    'name': $('#libraryName').val(),
+                    'address': $('#libraryAddress').val(),
+                    'number': $('#libraryKey').val(),
+                    'university_code': $('#universitySelect').val(),
+                };
+
+                // CSRF tokenini olish
+                var csrftoken = getCookie('csrftoken');
+
+                // JSON formatida yuborish uchun
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "create_library_json" %}', // Django funksiyasining manzili
+                    data: JSON.stringify(formData), // JSON formatida ma'lumotlarni yuborish
+                    contentType: 'application/json', // Ma'lumot turi JSON
+                    beforeSend: function (xhr, settings) {
+                        // CSRF tokenini so'rovga qo'shish
+                        xhr.setRequestHeader('X-CSRFToken', csrftoken);
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            // Kutubxona muvaffaqiyatli yaratilgandan so'ng, modalni yopish
+                            $('#exampleModalgetbootstrap').modal('hide');
+                            // Sahifani qayta yuklash
+                            location.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Server bilan bog\'lanishda xatolik yuz berdi. Qaytadan urinib ko\'ring.');
+                    }
+                });
+            });
+        });
+
+        // CSRF tokenini qaytarish funksiyasi
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // "Kutubxona ro'yhatini chiqarish" funksiyasi
+        $(document).ready(function () {
+            // AJAX arqali kutubxonalar ma'lumotlarini olish
+            $.ajax({
+                url: '{% url "libraries_list" %}',
+                type: 'GET',
+                success: function (response) {
+                    var librariesHTML = '';
+                    // Ma'lumotlarni HTML-da chiqarish
+                    response.forEach(function (library) {
+                        librariesHTML += `
+                                            <div class="col-xl-4 col-md-6">
+                                                <div class="prooduct-details-box">
+                                                    <div class="media"><img class="align-self-center img-fluid img-60"
+                                                                            src="{% static 'assets/images/library.png' %}" alt="#">
+                                                        <div class="media-body ms-3">
+                                                            <div class="product-name">
+                                                                <h6><a href="#" class="library-link" data-library-id="${library.id}">${library.name}</a></h6>
+                                                            </div>
+                                                            <div class="rating">
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                                <i class="fa fa-star"></i>
+                                                            </div>
+                                                            <div class="price d-flex">
+                                                                <div class="text-muted me-2">Kitoblar soni</div>
+                                                                : ${library.book_count}
+                                                            </div>
+                                                            <div class="price d-flex">
+                                                                <div class="text-muted me-2">Mualliflar soni</div>
+                                                                : ${library.author_count}
+                                                            </div>
+                                                            <div class="price d-flex">
+                                                                <div class="text-muted me-2">Small librarianlar soni</div>
+                                                                : ${library.small_librarians_count}
+                                                            </div>
+                                                            <div class="avaiabilty">
+                                                                <div class="text-success">Kutubxona manzili</div>
+                                                                ${library.address}
+                                                            </div>
+                                                            <br>
+                                                            <a class="btn btn-primary btn-xs" href="#">${library.university}</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                `;
+                    });
+                    $('#libraries-list').html(librariesHTML);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+        // "Kutubxona formasini to'ldirish" funksiyasi
+        $(document).ready(function () {
+            // Universitetlarni olish va select dropdown ni to'ldirish funksiyasi
+            function fetchAndPopulateUniversities() {
+                $.ajax({
+                    url: '{% url 'get_universities_token_data' %}',
+                    type: 'GET',
+                    success: function (response) {
+                        var universities = response.universities;
+                        var select = $('#universitySelect');
+                        select.empty();
+                        select.append($('<option>').text('Tanlang...').attr('disabled', true).attr('selected', true));
+                        $.each(universities, function (index, university) {
+                            select.append($('<option>').attr('value', university.code).text(university.name));
+                        });
+
+                        // Select2 ni boshlang
+                        select.select2({
+
+                            placeholder: 'Universitetni tanlang', // Placeholder matni
+                            width: '100%', // To'la ekranlik
+                            dropdownAutoWidth: true, // Dropdownning avto-uzunligi
+                            allowClear: true, // Tozalash tugmasi
+                            language: 'uz', // Til
+                            // O'zgaruvchilarga qo'shimcha qiymatlar
+                            dropdownParent: $('#exampleModalgetbootstrap'), // Dropdown ota-oyini belgilash
+                            closeOnSelect: true, // Tanlanganda modalni yopish
+                            // Va boshqalar...
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Universitetlarni olishda xatolik:', error);
+                    }
+                });
+            }
+
+            // Modal ochilganda funksiyani chaqirish
+            $('#exampleModalgetbootstrap').on('show.bs.modal', function () {
+                fetchAndPopulateUniversities();
+            });
+        });
+    </script>
+    <!-- Plugins JS start-->
+
+    <script>
+        $(document).ready(function () {
+            var selectedUniversityCode = null;
+
+            $.ajax({
+                url: '{% url "get_librarians_per_university" %}',
+                method: 'GET',
+                success: function (data) {
+                    var tbody = $('#center-library tbody');
+                    tbody.empty(); // Oldingi ma'lumotlarni tozalash
+
+                    $.each(data.universities, function (index, university) {
+                        var bigLibrarian = university.big_librarian ? university.big_librarian.full_name : 'Kiritilmagan';
+
+                        var row = '<tr>' +
+                            '<td>' +
+                            '<div class="d-flex align-items-center gap-2">' +
+                            '<div>' +
+                            '<h6 class="f-14 mb-0 f-w-400">' + (index + 1) + '</h6>' +
+                            '</div>' +
+                            '</div>' +
+                            '</td>' +
+                            '<td>' + university.university_name + '</td>' +
+                            '<td>' + university.university_code + '</td>' +
+                            '<td>' + university.library_count + '</td>' +
+                            '<td>' + university.small_librarian_count + '</td>' +
+                            '<td>' + bigLibrarian + '</td>' +
+                            '<td>' + '<button class="btn badge-light-primary" type="button" data-bs-toggle="modal" data-bs-target="#add_big_librarian" data-university-code="' + university.university_code + '">Tahrirlash</button>' + '</td>' +
+                            '</tr>';
+
+                        tbody.append(row);
+                    });
+                }
+            });
+
+            // Modal ochilganda AJAX orqali library_admins ni olish
+            $('#add_big_librarian').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                selectedUniversityCode = button.data('university-code'); // "selectedUniversity" -> "selectedUniversityCode"
+
+                $.ajax({
+                    url: '{% url "get_library_admins" %}',
+                    method: 'GET',
+                    success: function (data) {
+                        var select = $('#bigLibrarianSelect');
+                        select.empty(); // Oldingi ma'lumotlarni tozalash
+
+                        $.each(data.library_admins, function (index, admin) {
+                            var option = '<option value="' + admin.id + '">' + admin.full_name + '</option>';
+                            select.append(option);
+                        });
+                    }
+                });
+            });
+
+            // Saqlash tugmachasini bosganda
+            $('#saveChangesButton').click(function () {
+                var selectedLibrarian = $('#bigLibrarianSelect').val();
+
+                $.ajax({
+                    url: '{% url 'assign_big_librarian' %}',
+                    method: 'POST',
+                    data: {
+                        'university_code': selectedUniversityCode,
+                        'big_librarian_id': selectedLibrarian,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function () {
+                        $('#add_big_librarian').modal('hide');
+                        location.reload();
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script src="{% static 'assets/js/select2/select2.full.min.js' %}"></script>
+    <script src="{% static 'assets/js/select2/select2-custom.js' %}"></script>
+    <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/js/datatable/datatables/datatable.custom.js' %}"></script>
+    <script src="{% static 'assets/js/tooltip-init.js' %}"></script>
+    <!-- Plugins JS Ends-->
+{% endblock %}

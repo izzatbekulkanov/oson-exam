@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load sass_tags %}
+
+{% block css %}
+<!-- Plugins css start-->
+<!-- Plugins css Ends-->
+{% endblock %}
+
+{% block content %}
+
+<div class="page-body">
+    <div class="container-fluid">
+        {% include "layout/breadcrumb.html" %}
+        <div class="row" id="user-container">
+
+            {% include "applications/library/librarian/components/card-1.html" %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "{% url 'library-admin-users' %}",
+        method: 'GET',
+        success: function(data) {
+            var userContainer = $('#user-container');
+            data.forEach(function(user) {
+                var bigLibrarianLibraries = user.big_librarian_libraries.map(lib => `<div class="text-center">${lib.name}</div>`).join('');
+                var smallLibrarianLibraries = user.small_librarian_libraries.map(lib => `<div class="text-center">${lib.name}</div>`).join('');
+
+                var userCard = `
+                <div class="col-xl-4 col-sm-6 col-xxl-3 col-ed-4 box-col-4">
+                    <div class="card social-profile">
+                        <div class="card-body">
+                            <div class="social-img-wrap">
+                                <div class="social-img">
+                                    <img src="${user.imageFile ? user.imageFile : '{% static "assets/images/dashboard-5/profile.png" %}'}" alt="Kutubxonachi rasmi">
+                                </div>
+                                <div class="edit-icon">
+                                    <svg>
+                                        <use href="{% static 'assets/svg/icon-sprite.svg' %}#profile-check"></use>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="social-details">
+                                <h5 class="mb-1"><a href="social-app.html">${user.full_name ? user.full_name : 'Ism mavjud emas'}</a></h5>
+                                <span class="f-light">${user.email}</span>
+                                <ul class="card-social">
+                                    ${user.facebook ? `<li><a href="${user.facebook}" target="_blank"><i class="fa fa-facebook"></i></a></li>` : ''}
+                                    ${user.telegram ? `<li><a href="${user.telegram}" target="_blank"><i class="fa fa-telegram"></i></a></li>` : ''}
+                                    ${user.instagram ? `<li><a href="${user.instagram}" target="_blank"><i class="fa fa-instagram"></i></a></li>` : ''}
+                                </ul>
+                                ${bigLibrarianLibraries ? `<h5><span><i class="fa fa-heart font-danger"></i> Kutubxona rahbari</span></h5>${bigLibrarianLibraries}` : ''}
+                                ${smallLibrarianLibraries ? `<h5><span><i class="fa fa-heart font-danger"></i> Kutubxona xodimi</span></h5>${smallLibrarianLibraries}` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+                userContainer.append(userCard);
+            });
+        },
+        error: function(error) {
+            console.log('Error:', error);
+        }
+    });
+});
+</script>
+<!-- Plugins JS start-->
+<script src="{% static 'assets/js/tooltip-init.js'%}"></script>
+<!-- Plugins JS Ends-->
+{% endblock %}

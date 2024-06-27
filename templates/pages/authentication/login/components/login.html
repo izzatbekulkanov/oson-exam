@@ -1,0 +1,81 @@
+{% load static %}
+<div class="row m-0">
+    <div class="col-12 p-0">
+        <div class="login-card login-dark">
+            <div>
+            <div class="login-main mb-4">
+                <div><a class="logo m-0" href="https://namspi.uz" target="_blank" ><img class="img-fluid for-light w-75"
+                                                            src="{% static 'assets/images/logo/logo.png' %}"
+                                                            alt="looginpage"><img class="img-fluid for-dark"
+                                                                                  src="{% static 'assets/images/logo/logo_dark.png' %}"
+                                                                                  alt="looginpage"></a></div>
+            </div>
+                <div class="login-main">
+                    <form method="post" class="theme-form"> {% csrf_token %}
+                        <h4 class="text-center"><b>Namangan davlat pedagogika instituti</b></h4>
+                        <p class="text-center">Email va parolingizni kiriting</p>
+                        {% if messages %}
+                            <div id="error-message">
+                                {% for message in messages %}
+                                    <div class="alert alert-danger" role="alert">
+                                        <i class="mdi mdi-block-helper me-2"></i> <strong>{{ message }}</strong>!
+                                    </div>
+                                    <p></p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="form-group">
+                            <label class="col-form-label" for="username">Email yoki foydalanuvchi nomi</label>
+                            <input class="form-control" type="username" id="username" name="username" required=""
+                                   placeholder="Email yoki foydalanuvchi nomi">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label" for="password"> Parol</label>
+                            <div class="form-input position-relative">
+                                <input class="form-control" type="password" name="login[password]" id="password"
+                                       required=""
+                                       placeholder="Parol">
+                                <div class="show-hide"><span class="show"></span></div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-0">
+                            <div class="checkbox p-0">
+                                <input id="checkbox1" type="checkbox">
+                                <label class="text-muted" for="checkbox1">Eslab qolish</label>
+                            </div>
+                            {#                                        <a class="link" href="forget-password.html">Parol tiklash</a>#}
+                            <div class="text-end mt-3">
+                                <button class="btn namspi btn-block w-100" type="submit">Tizimga kirish
+                                </button>
+                            </div>
+                        </div>
+                        {#                                    <p class="mt-4 mb-0 text-center">Don't have account?<a class="ms-2" href="sign-up.html">Create#}
+                        {#                                        Account</a>#}
+                        {#                                    </p>#}
+                    </form>
+                </div>
+                <div class="login-main mt-4">
+                    <h6 class="text-muted or text-center mb-3">Quyidagilar orqali kiring</h6>
+                    <div class="social mt-4">
+                        <div class="row">
+                            <div class="btn-showcase col-4 border-t-success">
+                                <a class="btn btn-air-light w-100" href="{% url 'oauth_authorize' %}">
+                                    <i class="icofont icofont-business-man"></i>Xodim
+                                </a>
+                            </div>
+                            <div class="btn-showcase col-4 border-t-success">
+                                <a class="btn btn-air-light w-100" href="{% url 'student_oauth_authorize' %}">
+                                    <i class="icofont icofont-graduate-alt"></i>Talaba
+                                </a>
+                            </div>
+                            <div class="btn-showcase col-4 border-t-primary">
+                                <a class="btn btn-light w-100" href="#">
+                                    <i class="icofont icofont-hat"></i>OneID</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

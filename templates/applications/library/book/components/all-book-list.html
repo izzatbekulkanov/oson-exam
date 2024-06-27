@@ -1,0 +1,209 @@
+{% load static %}
+{% load sass_tags %}
+{% load i18n %}
+<div class="product-grid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="product-sidebar">
+                <div class="filter-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="mb-0 f-w-600">{{ bbk.name }}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if books.exists %}
+        {% for book in books %}
+            <div class="col-xl-2 col-sm-6 xl-3">
+                <div class="card">
+                    <div class="product-box">
+                        <div class="product-img"><img class="img-fluid"
+                                                      src="{{ book.image.url }}"
+                                                      alt="">
+                            <div class="product-hover">
+                                <ul>
+                                    <li>
+                                        <button class="btn" type="button"><i class="icon-download"
+                                                                             data-bs-toggle="modal"
+                                                                             data-bs-target="#exampleModalCenter1"></i>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="btn" type="button" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModalCenter"
+                                                onclick="getBookDetails({{ book.id }})"><i class="icon-eye"></i>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="product-details">
+                            <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                    class="fa fa-star"></i><i
+                                    class="fa fa-star"></i><i class="fa fa-star"></i></div>
+                            <a href="product-page.html">
+                                <h4>{{ book.title | truncatechars:17 }}</h4></a>
+                            <p>{{ book.book_type.name }}</p>
+                            <div class="product-price">{{ book.language }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <div class="card purchase-card discover"><img class="img-fluid"
+                                                          src="{% static 'assets/images/dashboard-2/no-content.png' %}"
+                                                          alt="vector discover">
+                <div class="card-body pt-3">
+                    <h5 class="mb-1">Topilmadi</h5>
+                    <p class="f-light">BBK ga tegishli kitoblar kiritilmagan</p>
+                    <a class="purchase-btn btn btn-hover-effect btn-primary f-w-500" href="javascript:history.back()">BBK
+                        ga qaytish</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    {% endif %}
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="product-box row">
+                    <div class="product-img col-lg-4">
+                        <img class="img-fluid" src="{% static 'assets/images/dashboard-2/no-content.png' %}"
+                             alt="vector discover">
+                    </div>
+                    <div class="product-details col-lg-8 text-start">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h4 id="bookTitle" class="text-center">Kitob nomi</h4>
+                            </div>
+
+                        </div>
+                        <div class="product-price mb-3" id="bbkDiv">
+                            <span id="bbkName"></span> |
+                            <span id="bbkCode"></span>
+
+                        </div>
+                        <div class="product-view">
+                            <div class="row details" id="bookDetails">
+                                <!-- Kitob ma'lumotlari shu yerga qo'shiladi -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="default-according style-1" id="accordionoc">
+                            <div class="card">
+                                <div class="card-header bg-primary">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link text-white" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseicon" aria-expanded="true"
+                                                aria-controls="collapse11">
+                                            <i class="icofont icofont-book-alt"></i>Adabiyot
+                                            nusxalari<span></span>
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div class="collapse" id="collapseicon" aria-labelledby="collapseicon"
+                                     data-bs-parent="#accordionoc">
+                                    <div class="card-body">
+                                        <div class="table-responsive signal-table">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">TR</th>
+                                                    <th scope="col">Inventar raqam</th>
+                                                    <th scope="col">Kutubxona</th>
+                                                    <th scope="col">Xolati</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="bookCopies">
+                                                <!-- Kitob nusxalari shu yerga qo'shiladi -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+{#                            <div class="card">#}
+{#                                <div class="card-header bg-primary">#}
+{#                                    <h5 class="mb-0">#}
+{#                                        <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse"#}
+{#                                                data-bs-target="#collapseicon1" aria-expanded="false">#}
+{#                                            <i class="icofont icofont-support"></i>Collapsible Group Item#}
+{#                                            #<span>2</span>#}
+{#                                        </button>#}
+{#                                    </h5>#}
+{#                                </div>#}
+{#                                <div class="collapse" id="collapseicon1" aria-labelledby="headingeight"#}
+{#                                     data-bs-parent="#accordionoc">#}
+{#                                    <div class="card-body">#}
+{#                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry#}
+{#                                        richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor#}
+{#                                        brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,#}
+{#                                        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda#}
+{#                                        shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson#}
+{#                                        cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.#}
+{#                                        Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt#}
+{#                                        you probably haven't heard of them accusamus labore sustainable VHS.#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalCenter1" tabindex="-1" aria-labelledby="exampleModalCenter1" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-toggle-wrapper">
+                    <ul class="list-unstyled">
+                        <li class="d-flex justify-content-center">
+                            <img class="w-25" src="{% static 'assets/images/gif/danger.gif' %}" alt="error">
+                        </li>
+                    </ul>
+                    <h4 class="text-center pb-2">Yuklab olish uchun ruxsat yo'q!</h4>
+                    <p class="text-center">Muammo yoki takliflarni yuboring <a href="">bu yerni bosing</a>.</p>
+                    <button class="btn btn-secondary d-flex m-auto" type="button" data-bs-dismiss="modal">Yopish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade vh-100" id="pdfViewerModal" tabindex="-1" role="dialog" aria-labelledby="pdfViewerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content vh-100">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pdfViewerModalLabel">PDF Faylini Ko'rish</h5>
+
+            </div>
+            <div class="modal-body h-100">
+                <!-- PDF faylni joylash uchun maydon -->
+                <canvas id="pdfViewer"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Sizning JS fayllaringizni shu yerga qo'shing -->

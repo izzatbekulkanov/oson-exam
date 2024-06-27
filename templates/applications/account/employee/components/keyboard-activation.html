@@ -1,0 +1,230 @@
+{% load static %}
+<div class="col-sm-12">
+    <div class="card">
+        <!-- Complex headers with column visibility Starts-->
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+
+                <div>
+                    <h5 class="mb-3">Hodimlar ro'yhati</h5>
+                </div>
+                <div class="list-product-header">
+                    <div>
+                        <div class="light-box d-flex align-items-center ">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                                    data-original-title="test" data-bs-target="#exampleModal"><i class="fa fa-plus"></i>Xodim
+                                qo'shish
+                            </button>
+                            <a data-bs-toggle="collapse" href="#collapseProduct" role="button"
+                               class="align-items-center ml-5"
+                               aria-expanded="false" aria-controls="collapseProduct">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round"
+                                     class="feather feather-filter filter-icon show ">
+                                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                                </svg>
+                                <i class="icon-close filter-close hide ">
+                                </i>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="collapse" id="collapseProduct">
+                <div class="card card-body list-product-body">
+                    <div class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-2 g-3">
+                        <div class="col">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected="">Choose Product</option>
+                                <option value="1">Apple iphone 13 Pro</option>
+                                <option value="2">Wood Chair</option>
+                                <option value="3">M185 Compact Wireless Mouse</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected="">Choose Category</option>
+                                <option value="1">Furniture</option>
+                                <option value="2">Smart Gadgets</option>
+                                <option value="3">Electrics</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected="">Choose Sub Category</option>
+                                <option value="1">Smart Phones</option>
+                                <option value="2">Smart Watches</option>
+                                <option value="3">Wireless headphone</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected="">Status</option>
+                                <option value="1">Sold Out</option>
+                                <option value="2">In Stock</option>
+                                <option value="3">Pre Order</option>
+                                <option value="4">Limited Stock</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected="">Price</option>
+                                <option value="1">56000.00</option>
+                                <option value="2">19000.00</option>
+                                <option value="3">10000.00</option>
+                                <option value="3">15000.00</option>
+                                <option value="3">99000.00</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table" id="employee-table">
+                    <thead>
+                    <tr class="border-bottom-primary">
+                        <th scope="col">TR</th>
+                        <th scope="col">Hodim</th>
+                        <th scope="col">Universitet</th>
+                        <th scope="col">Tug'ilgan yili</th>
+                        <th scope="col">Bo'lim</th>
+                        <th scope="col">Lavozim</th>
+                        <th scope="col">Tizim lavozimi</th>
+                        <th scope="col">Kiritilgan vaqt</th>
+                        <th scope="col">Yangilangan vaqt</th>
+                        <th scope="col">Holati</th>
+                        <th scope="col">Tahrirlash</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="border-bottom-secondary">
+                        <th scope="row">1</th>
+                        <td><img class="img-30 me-2" src="../assets/images/user/1.jpg" alt="profile">Ram
+                            Jacob
+                        </td>
+                        <td>Wolfe</td>
+                        <td>RamJacob@twitter</td>
+                        <td>Developer</td>
+                        <td>Apple Inc.</td>
+                        <td><span class="badge badge-light-danger">Php</span></td>
+                        <td>IND</td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+            <nav aria-label="...">
+                <ul id="pagination" class="pagination pagination-success pagin-border-success">
+                    <li id="pagination-previous" class="page-item disabled"><a class="page-link"
+                                                                               href="javascript:void(0)" tabindex="-1">Previous</a>
+                    </li>
+                    <li id="pagination-current-page" class="page-item disabled"><a class="page-link"
+                                                                                   href="javascript:void(0)"
+                                                                                   tabindex="-1">Current Page</a></li>
+                    <li id="pagination-total-pages" class="page-item disabled"><a class="page-link"
+                                                                                  href="javascript:void(0)"
+                                                                                  tabindex="-1">Total Pages</a></li>
+                    <li id="pagination-next" class="page-item"><a class="page-link" href="javascript:void(0)">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <!-- Complex headers with column visibility Ends-->
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4><strong class="txt-success">Yangi xodim qo'shish</strong></h4>
+                <div class="modal-toggle-wrapper">
+                    <div class="card-body">
+                        <form class="row g-3 needs-validation custom-input" novalidate="">{% csrf_token %}
+                            <div class="col-12">
+                                <label class="form-label" for="validationCustom01">Foydalanuvchi nomi</label>
+                                <input class="form-control" id="validationCustom01" type="text"
+                                       placeholder="Foydalanuvchi nomini kiriting" required="" autocomplete="off">
+                                <div class="invalid-feedback">Iltimos foydalanuvchi nomini kiriting</div>
+                                <div class="valid-feedback">Ajoyib!</div>
+                            </div>
+                            <div class="col-12">
+                                <label class="col-sm-12 col-form-label" for="password">Password</label>
+                                <input class="form-control" id="password" type="password" required="" name="password"
+                                       autocomplete="off">
+                                <div class="invalid-feedback">Iltimos murakkab parol qo'ying</div>
+                                <div class="valid-feedback">Ajoyib!</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label" for="first_name">Ismi</label>
+                                <input class="form-control" id="first_name" type="text" required="" name="first_name"
+                                       placeholder="Ismni kiriting">
+                                <div class="invalid-feedback">Iltimos ismni kiriting.</div>
+                                <div class="valid-feedback">Ajoyib!
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="second_name">Familiyasi</label>
+                                <input class="form-control" id="second_name" type="text" required=""
+                                       placeholder="Familiyani kiriting" name="second_name">
+                                <div class="invalid-feedback">Iltimos familiyani kiriting.</div>
+                                <div class="valid-feedback">
+                                    Ajoyib!
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label" for="email">Email</label>
+                                <input class="form-control" id="email" type="email" name="email"
+                                       placeholder="Emailni kiriting" required="">
+                                <div class="invalid-feedback">Iltimos Emailni kiriting.</div>
+                                <div class="valid-feedback">
+                                    Ajoyib!
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="employeeUniversity">Universitet</label>
+                                <select class="form-select" id="employeeUniversity" required>
+                                    <option selected="" disabled="" value="">Choose...</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a valid university.</div>
+                                <div class="valid-feedback">
+                                    Ajoyib!
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="employeeImage">Foydalanuvchi rasmi</label>
+                                <input class="form-control" id="employeeImage" type="file" aria-label="file example"
+                                       required="" name="image">
+                                <div class="invalid-feedback">Invalid form file selected</div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="invalidCheck" type="checkbox" value=""
+                                           required="" name="is_active">
+                                    <label class="form-check-label" for="invalidCheck">Faol xodim</label>
+                                    <div class="invalid-feedback">You must agree before submitting.</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100" type="button" id="saveEmployeeBtn">Saqlash</button>
+                            </div>
+                        </form>
+                    </div>
+                    {#                    <div class="row">#}
+                    {#                        <div class="col-6">#}
+                    {#                            <div class="modal-img"><img src="{% static 'assets/images/gif/users.gif' %}" alt="online-shopping"></div>#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
