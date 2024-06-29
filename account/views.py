@@ -6,8 +6,13 @@ from django.shortcuts import redirect
 
 def login_view(request):
     if request.user.is_authenticated:
-        request.session['login_via'] = 'login_view'
-        return redirect('employee_dashboard')
+        # Foydalanuvchi roli asosida yo'naltirish
+        if request.user.groups.filter(name='Admin').exists() or request.user.groups.filter(name='Employee').exists():
+            request.session['login_via'] = 'login_view'
+            return redirect('employee_dashboard')
+        else:
+            request.session['login_via'] = 'login_view'
+            return redirect('student_dashboard')
 
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -19,7 +24,11 @@ def login_view(request):
             login(request, user)
             messages.success(request, 'Tizimga muvaffaqiyatli kirdingiz.')
             request.session['login_via'] = 'login_view'
-            return redirect('employee_dashboard')
+            # Foydalanuvchi roli asosida yo'naltirish
+            if user.groups.filter(name='Admin').exists() or user.groups.filter(name='Employee').exists():
+                return redirect('employee_dashboard')
+            else:
+                return redirect('student_dashboard')
         else:
             messages.error(request, 'Email yoki parol xato.')
 

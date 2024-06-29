@@ -15,3 +15,13 @@ def student_dashboard(request):
 @login_required
 def dashboard(request):
     return render(request, 'landing/content.html')
+
+
+@login_required
+def settings_log(request):
+    return render(request, 'pages/settings/logs.html')
+
+
+@login_required
+def api_key(request):
+    return render(request, 'pages/HEMIS/api_key.html')

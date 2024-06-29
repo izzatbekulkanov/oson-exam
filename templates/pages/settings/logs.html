@@ -1,0 +1,83 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+        </div>
+        <div class="content-body"><!-- Dashboard Analytics Start -->
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Recent devices</h4>
+            </div>
+            <div class="table-responsive">
+                <table class="table text-nowrap text-center">
+                    <thead>
+                    <tr>
+                        <th class="text-start">BROWSER</th>
+                        <th>DEVICE</th>
+                        <th>LOCATION</th>
+                        <th>RECENT ACTIVITY</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="text-start">
+                            <div class="avatar me-25">
+                                <img src="../../../app-assets/images/icons/google-chrome.png" alt="avatar" width="20"
+                                     height="20">
+                            </div>
+                            <span class="fw-bolder">Chrome on Windows</span>
+                        </td>
+                        <td>Dell XPS 15</td>
+                        <td>United States</td>
+                        <td>10, Jan 2021 20:07</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">
+                            <div class="avatar me-25">
+                                <img src="../../../app-assets/images/icons/google-chrome.png" alt="avatar" width="20"
+                                     height="20">
+                            </div>
+                            <span class="fw-bolder">Chrome on Android</span>
+                        </td>
+                        <td>Google Pixel 3a</td>
+                        <td>Ghana</td>
+                        <td>11, Jan 2021 10:16</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">
+                            <div class="avatar me-25">
+                                <img src="../../../app-assets/images/icons/google-chrome.png" alt="avatar" width="20"
+                                     height="20">
+                            </div>
+                            <span class="fw-bolder">Chrome on MacOS</span>
+                        </td>
+                        <td>Apple iMac</td>
+                        <td>Mayotte</td>
+                        <td>11, Jan 2021 12:10</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">
+                            <div class="avatar me-25">
+                                <img src="../../../app-assets/images/icons/google-chrome.png" alt="avatar" width="20"
+                                     height="20">
+                            </div>
+                            <span class="fw-bolder">Chrome on iPhone</span>
+                        </td>
+                        <td>Apple iPhone XR</td>
+                        <td>Mauritania</td>
+                        <td>12, Jan 2021 8:29</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+        </div>
+    
+    </div>
+{% endblock content %}
