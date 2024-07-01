@@ -12,6 +12,11 @@
                     Ishlab chiqarishga tayyor va ishlatish uchun qulay administrator shablonlari<br class="d-none d-lg-block"/>
                     Ishonchlilik va sozlanishi uchun.
                 </h2>
+            <ul>
+                {% for ip in local_ips %}
+            <li>{{ ip }}</li>
+        {% endfor %}
+            </ul>
                 <div class="landing-hero-btn d-inline-block position-relative">
                     <span class="hero-btn-item position-absolute d-none d-md-flex text-heading"
                         >Join community
@@ -21,6 +26,7 @@
                         class="scaleX-n1-rtl"
                         /></span>
                     <a href="#landingPricing" class="btn btn-primary btn-lg">Erta ruxsat oling</a>
+                    
                 </div>
             </div>
             <div id="heroDashboardAnimation" class="hero-animation-img">
