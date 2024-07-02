@@ -1,0 +1,223 @@
+{% extends 'landing/landing-page.html' %}
+{% load static %}
+{% block content %}
+    <div data-bs-spy="scroll" class="scrollspy-example">
+        <!-- Hero: Start -->
+        <section id="hero-animation">
+            <div id="landingHero" class="section-py landing-hero position-relative">
+                <div class="container">
+                    <div class="hero-text-box text-center">
+                        <h1 class="text-primary hero-title display-6 fw-bold">Oson Exam - Oson Imtihon</h1>
+                        <h2 class="hero-sub-title h6 mb-4 pb-1">
+                            “Ilm va intellekt – sizning kelajagingizni shakllantiradi. Bugun sizga berilayotgan imtihon – <br
+                                class="d-none d-lg-block"/>
+                            bu kelajagingizni qurish uchun bir qadamdir.”
+                        </h2>
+                    </div>
+                    <div id="heroDashboardAnimation" class="hero-animation-img">
+                        <a href="" target="_blank">
+                            <div id="heroAnimationImg" class="position-relative hero-dashboard-img">
+                                <img
+                                        src="{% static 'assets/img/front-pages/landing-page/hero-dashboard-light.png' %}"
+                                        alt=" hero dashboard"
+                                        class="animation-img"
+                                        data-app-light-img="front-pages/landing-page/hero-dashboard-light.png' %}"
+                                        data-app-dark-img="front-pages/landing-page/hero-dashboard-dark.png' %}"/>
+                                <img
+                                        src="{% static 'assets/img/front-pages/landing-page/hero-elements-light.png' %}"
+                                        alt=" hero elements"
+                                        class="position-absolute hero-elements-img animation-img top-0 start-0"
+                                        data-app-light-img="front-pages/landing-page/hero-elements-light.png' %}"
+                                        data-app-dark-img="front-pages/landing-page/hero-elements-dark.png' %}"/>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="landing-hero-blank"></div>
+        </section>
+        <!-- Hero: End -->
+
+
+        <!-- Real customers reviews: Start -->
+        <section id="landingReviews" class="section-py bg-body landing-reviews pb-0">
+            <!-- What people say slider: Start -->
+            <div class="container">
+                <div class="row align-items-center gx-0 gy-4 g-lg-5">
+                    <div class="col-md-6 col-lg-5 col-xl-3">
+                        <div class="mb-3 pb-1">
+                            <span class="badge bg-label-primary">RTTM:</span>
+                        </div>
+                        <h3 class="mb-1"><span class="section-title">Namangan davlat pedagogika instituti RTTM jamoasi:</span></h3>
+                        <p class="mb-3 mb-md-5">
+                            Raqamli ta'lim texnologiyalar markazi<br class="d-none d-xl-block"/>
+                         
+                        </p>
+                        <div class="landing-reviews-btns">
+                            <button
+                                    id="reviews-previous-btn"
+                                    class="btn btn-label-primary reviews-btn me-3 scaleX-n1-rtl"
+                                    type="button">
+                                <i class="ti ti-chevron-left ti-sm"></i>
+                            </button>
+                            <button id="reviews-next-btn" class="btn btn-label-primary reviews-btn scaleX-n1-rtl"
+                                    type="button">
+                                <i class="ti ti-chevron-right ti-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-7 col-xl-9">
+                        <div class="swiper-reviews-carousel overflow-hidden mb-5 pb-md-2 pb-md-3">
+                            <div class="swiper" id="swiper-reviews">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="card h-100">
+                                            <div class="card-body text-body d-flex flex-column justify-content-between h-100">
+                                                <p>
+                                                    “Oson Imtihon men hozirgacha bo'lgan eng foydali bootstrap
+                                                    mavzusidir
+                                                    ishlatilgan. Men kuta olmayman
+                                                    uni keyingi loyiham uchun yana ishlatish uchun."
+                                                </p>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar me-2 avatar-sm">
+                                                        <img src="{% static 'assets/img/avatars/1.png' %}" alt="Avatar"
+                                                             class="rounded-circle"/>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class=" mb-0">Izzatbek Ulkanov</h6>
+                                                        <p class="small text-muted mb-0">Airbnb bosh direktori</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="card h-100">
+                                            <div class="card-body text-body d-flex flex-column justify-content-between h-100">
+                                                
+                                                <p>
+                                                    “I've never used a theme as versatile and flexible as Oson Imtihon.
+                                                    It's my go
+                                                    to for building
+                                                    dashboard sites on almost any project.”
+                                                </p>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar me-2 avatar-sm">
+                                                       <img src="{% static 'assets/img/avatars/1.png' %}" alt="Avatar"
+                                                             class="rounded-circle"/>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class=" mb-0">Javohir Tolipjonov</h6>
+                                                        <p class="small text-muted mb-0">Founder of Hubspot</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="card h-100">
+                                            <div class="card-body text-body d-flex flex-column justify-content-between h-100">
+                                               
+                                                <p>
+                                                    This template is really clean & well documented. The docs are really
+                                                    easy to understand and
+                                                    it's always easy to find a screenshot from their website.
+                                                </p>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar me-2 avatar-sm">
+                                                        <img src="{% static 'assets/img/avatars/3.png' %}" alt="Avatar"
+                                                             class="rounded-circle"/>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class=" mb-0">Curtis Fletcher</h6>
+                                                        <p class="small text-muted mb-0">Design Lead at Dribbble</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="card h-100">
+                                            <div class="card-body text-body d-flex flex-column justify-content-between h-100">
+                                                
+                                                <p>
+                                                    All the requirements for developers have been taken into
+                                                    consideration,
+                                                    so I’m able to build
+                                                    any interface I want.
+                                                </p>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar me-2 avatar-sm">
+                                                        <img src="{% static 'assets/img/avatars/4.png' %}" alt="Avatar"
+                                                             class="rounded-circle"/>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class=" mb-0">Sara Smith</h6>
+                                                        <p class="small text-muted mb-0">Founder of Continental</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="card h-100">
+                                            <div class="card-body text-body d-flex flex-column justify-content-between h-100">
+                                                
+                                                <p>
+                                                    “I've never used a theme as versatile and flexible as Oson Imtihon.
+                                                    It's my go
+                                                    to for building
+                                                    dashboard sites on almost any project.”
+                                                </p>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar me-2 avatar-sm">
+                                                        <img src="{% static 'assets/img/avatars/5.png' %}" alt="Avatar"
+                                                             class="rounded-circle"/>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class=" mb-0">Eugenia Moore</h6>
+                                                        <p class="small text-muted mb-0">Founder of Hubspot</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="card h-100">
+                                            <div class="card-body text-body d-flex flex-column justify-content-between h-100">
+                                                
+                                                <p>
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nemo
+                                                    mollitia, ad eum
+                                                    officia numquam nostrum repellendus consequuntur!
+                                                </p>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar me-2 avatar-sm">
+                                                        <img src="{% static 'assets/img/avatars/1.png' %}" alt="Avatar"
+                                                             class="rounded-circle"/>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class=" mb-0">Sara Smith</h6>
+                                                        <p class="small text-muted mb-0">Founder of Continental</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- What people say slider: End -->
+        </section>
+        <!-- Real customers reviews: End -->
+
+
+    </div>
+
+{% endblock content %}

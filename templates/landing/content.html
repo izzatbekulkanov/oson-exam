@@ -2,482 +2,128 @@
 {% load static %}
 {% block content %}
     <div data-bs-spy="scroll" class="scrollspy-example">
-    <!-- Hero: Start -->
-<section id="hero-animation">
-    <div id="landingHero" class="section-py landing-hero position-relative">
-        <div class="container">
-            <div class="hero-text-box text-center">
-                <h1 class="text-primary hero-title display-6 fw-bold">Oson Exam - Oson Imtihon</h1>
-                <h2 class="hero-sub-title h6 mb-4 pb-1">
-                    Ishlab chiqarishga tayyor va ishlatish uchun qulay administrator shablonlari<br class="d-none d-lg-block"/>
-                    Ishonchlilik va sozlanishi uchun.
-                </h2>
-            <ul>
-                {% for ip in local_ips %}
-            <li>{{ ip }}</li>
-        {% endfor %}
-            </ul>
-                <div class="landing-hero-btn d-inline-block position-relative">
-                    <span class="hero-btn-item position-absolute d-none d-md-flex text-heading"
-                        >Join community
-                    <img
-                        src="{% static 'assets/img/front-pages/icons/Join-community-arrow.png' %}"
-                        alt=" Join community arrow"
-                        class="scaleX-n1-rtl"
-                        /></span>
-                    <a href="#landingPricing" class="btn btn-primary btn-lg">Erta ruxsat oling</a>
-                    
-                </div>
-            </div>
-            <div id="heroDashboardAnimation" class="hero-animation-img">
-                <a href="" target="_blank">
-                    <div id="heroAnimationImg" class="position-relative hero-dashboard-img">
-                        <img
-                            src="{% static 'assets/img/front-pages/landing-page/hero-dashboard-light.png' %}"
-                            alt=" hero dashboard"
-                            class="animation-img"
-                            data-app-light-img="front-pages/landing-page/hero-dashboard-light.png' %}"
-                            data-app-dark-img="front-pages/landing-page/hero-dashboard-dark.png' %}" />
-                        <img
-                            src="{% static 'assets/img/front-pages/landing-page/hero-elements-light.png' %}"
-                            alt=" hero elements"
-                            class="position-absolute hero-elements-img animation-img top-0 start-0"
-                            data-app-light-img="front-pages/landing-page/hero-elements-light.png' %}"
-                            data-app-dark-img="front-pages/landing-page/hero-elements-dark.png' %}" />
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="landing-hero-blank"></div>
-</section>
-    <!-- Hero: End -->
-        
-
-    <!-- Real customers reviews: Start -->
-    <section id="landingReviews" class="section-py bg-body landing-reviews pb-0">
-        <!-- What people say slider: Start -->
-        <div class="container">
-            <div class="row align-items-center gx-0 gy-4 g-lg-5">
-                <div class="col-md-6 col-lg-5 col-xl-3">
-                    <div class="mb-3 pb-1">
-                        <span class="badge bg-label-primary">Real Customers Reviews</span>
-                    </div>
-                    <h3 class="mb-1"><span class="section-title">What people say</span></h3>
-                    <p class="mb-3 mb-md-5">
-                        See what our customers have to<br class="d-none d-xl-block"/>
-                        say about their experience.
-                    </p>
-                    <div class="landing-reviews-btns">
-                        <button
-                                id="reviews-previous-btn"
-                                class="btn btn-label-primary reviews-btn me-3 scaleX-n1-rtl"
-                                type="button">
-                            <i class="ti ti-chevron-left ti-sm"></i>
-                        </button>
-                        <button id="reviews-next-btn" class="btn btn-label-primary reviews-btn scaleX-n1-rtl"
-                                type="button">
-                            <i class="ti ti-chevron-right ti-sm"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-7 col-xl-9">
-                    <div class="swiper-reviews-carousel overflow-hidden mb-5 pb-md-2 pb-md-3">
-                        <div class="swiper" id="swiper-reviews">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <div class="card h-100">
-                                        <div class="card-body text-body d-flex flex-column justify-content-between h-100">
-                                            <div class="mb-3">
-                                                <img
-                                                        src="{% static 'assets/img/front-pages/branding/logo-1.png' %}"
-                              alt=" client logo"
-                                                class="client-logo img-fluid" />
-                                            </div>
-                                            <p>
-                                                “Oson Imtihon men hozirgacha bo'lgan eng foydali bootstrap mavzusidir
-                                                ishlatilgan. Men kuta olmayman
-                                                uni keyingi loyiham uchun yana ishlatish uchun."
-                                            </p>
-                                            <div class="text-warning mb-3">
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar me-2 avatar-sm">
-                                                    <img src="{% static 'assets/img/avatars/1.png' %}" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div>
-                              <h6 class=" mb-0">Sesiliya Payn</h6>
-                                                    <p class="small text-muted mb-0">Airbnb bosh direktori</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="card h-100">
-                                        <div class="card-body text-body d-flex flex-column justify-content-between h-100">
-                                            <div class="mb-3">
-                                                <img
-                                                        src="{% static 'assets/img/front-pages/branding/logo-2.png' %}"
-                              alt=" client logo"
-                                                class="client-logo img-fluid" />
-                                            </div>
-                                            <p>
-                                                “I've never used a theme as versatile and flexible as Oson Imtihon. It's my go
-                                                to for building
-                                                dashboard sites on almost any project.”
-                                            </p>
-                                            <div class="text-warning mb-3">
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar me-2 avatar-sm">
-                                                    <img src="{% static 'assets/img/avatars/2.png' %}" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div>
-                              <h6 class=" mb-0">Eugenia Moore</h6>
-                                                    <p class="small text-muted mb-0">Founder of Hubspot</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="card h-100">
-                                        <div class="card-body text-body d-flex flex-column justify-content-between h-100">
-                                            <div class="mb-3">
-                                                <img
-                                                        src="{% static 'assets/img/front-pages/branding/logo-3.png' %}"
-                              alt=" client logo"
-                                                class="client-logo img-fluid" />
-                                            </div>
-                                            <p>
-                                                This template is really clean & well documented. The docs are really
-                                                easy to understand and
-                                                it's always easy to find a screenshot from their website.
-                                            </p>
-                                            <div class="text-warning mb-3">
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar me-2 avatar-sm">
-                                                    <img src="{% static 'assets/img/avatars/3.png' %}" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div>
-                              <h6 class=" mb-0">Curtis Fletcher</h6>
-                                                    <p class="small text-muted mb-0">Design Lead at Dribbble</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="card h-100">
-                                        <div class="card-body text-body d-flex flex-column justify-content-between h-100">
-                                            <div class="mb-3">
-                                                <img
-                                                        src="{% static 'assets/img/front-pages/branding/logo-4.png' %}"
-                              alt=" client logo"
-                                                class="client-logo img-fluid" />
-                                            </div>
-                                            <p>
-                                                All the requirements for developers have been taken into consideration,
-                                                so I’m able to build
-                                                any interface I want.
-                                            </p>
-                                            <div class="text-warning mb-3">
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star ti-sm"></i>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar me-2 avatar-sm">
-                                                    <img src="{% static 'assets/img/avatars/4.png' %}" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div>
-                              <h6 class=" mb-0">Sara Smith</h6>
-                                                    <p class="small text-muted mb-0">Founder of Continental</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="card h-100">
-                                        <div class="card-body text-body d-flex flex-column justify-content-between h-100">
-                                            <div class="mb-3">
-                                                <img
-                                                        src="{% static 'assets/img/front-pages/branding/logo-5.png' %}"
-                              alt=" client logo"
-                                                class="client-logo img-fluid" />
-                                            </div>
-                                            <p>
-                                                “I've never used a theme as versatile and flexible as Oson Imtihon. It's my go
-                                                to for building
-                                                dashboard sites on almost any project.”
-                                            </p>
-                                            <div class="text-warning mb-3">
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar me-2 avatar-sm">
-                                                    <img src="{% static 'assets/img/avatars/5.png' %}" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div>
-                              <h6 class=" mb-0">Eugenia Moore</h6>
-                                                    <p class="small text-muted mb-0">Founder of Hubspot</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="card h-100">
-                                        <div class="card-body text-body d-flex flex-column justify-content-between h-100">
-                                            <div class="mb-3">
-                                                <img
-                                                        src="{% static 'assets/img/front-pages/branding/logo-6.png' %}"
-                              alt=" client logo"
-                                                class="client-logo img-fluid" />
-                                            </div>
-                                            <p>
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nemo
-                                                mollitia, ad eum
-                                                officia numquam nostrum repellendus consequuntur!
-                                            </p>
-                                            <div class="text-warning mb-3">
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star-filled ti-sm"></i>
-                                                <i class="ti ti-star ti-sm"></i>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar me-2 avatar-sm">
-                                                    <img src="{% static 'assets/img/avatars/1.png' %}" alt="Avatar" class="rounded-circle" />
-                            </div>
-                            <div>
-                              <h6 class=" mb-0">Sara Smith</h6>
-                                                    <p class="small text-muted mb-0">Founder of Continental</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
-                        </div>
+        <!-- Hero: Start -->
+        <section id="hero-animation">
+            <div id="landingHero" class="section-py landing-hero position-relative">
+                <div class="container">
+                    <div class="hero-text-box text-center">
+                        <h1 class="text-primary hero-title display-6 fw-bold">Oson Exam - Oson Imtihon</h1>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- What people say slider: End -->
 
-    </section>
-    <!-- Real customers reviews: End -->
-        
-    <!-- CTA: Start -->
-    <section id="landingCTA" class="section-py landing-cta p-lg-0 pb-0">
-        <div class="container">
-            <div class="row align-items-center gy-5 gy-lg-0">
-                <div class="col-lg-6 text-center text-lg-start">
-                    <h6 class="h2 text-primary fw-bold mb-1">Ready to Get Started?</h6>
-                    <p class="fw-medium mb-4">Start your project with a 14-day free trial</p>
-                    <a href="payment-page.html" class="btn btn-lg btn-primary">Get Started</a>
-                </div>
-                <div class="col-lg-6 pt-lg-5 text-center text-lg-end">
-                    <img
-                            src="{% static 'assets/img/front-pages/landing-page/cta-dashboard.png' %}"
-                alt=" cta dashboard"
-                    class="img-fluid" />
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- CTA: End -->
-
-    <!-- FAQ: Start -->
-    <section id="landingFAQ" class="section-py bg-body landing-faq">
-        <div class="container">
-            <div class="text-center mb-3 pb-1">
-                <span class="badge bg-label-primary">FAQ</span>
-            </div>
-            <h3 class="text-center mb-1">Frequently asked <span class="section-title">questions</span></h3>
-            <p class="text-center mb-5 pb-3">Browse through these FAQs to find answers to commonly asked questions.</p>
-            <div class="row gy-5">
-                <div class="col-lg-5">
-                    <div class="text-center">
-                        <img
-                                src="{% static 'assets/img/front-pages/landing-page/faq-boy-with-logos.png' %}"
-                  alt=" faq boy with logos"
-                        class="faq-image" />
-                    </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="accordion" id="accordionExample">
-                        <div class="card accordion-item active">
-                            <h2 class="accordion-header" id="headingOne">
-                                <button
-                                        type="button"
-                                        class="accordion-button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#accordionOne"
-                                        aria-expanded="true"
-                                        aria-controls="accordionOne">
-                                    Do you charge for each upgrade?
-                                </button>
-                            </h2>
-
-                            <div id="accordionOne" class="accordion-collapse collapse show"
-                                 data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    Lemon drops chocolate cake gummies carrot cake chupa chups muffin topping. Sesame
-                                    snaps icing
-                                    marzipan gummi bears macaroon dragée danish caramels powder. Bear claw dragée pastry
-                                    topping
-                                    soufflé. Wafer gummi bears marshmallow pastry pie.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card accordion-item">
-                            <h2 class="accordion-header" id="headingTwo">
-                                <button
-                                        type="button"
-                                        class="accordion-button collapsed"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#accordionTwo"
-                                        aria-expanded="false"
-                                        aria-controls="accordionTwo">
-                                    Do I need to purchase a license for each website?
-                                </button>
-                            </h2>
-                            <div
-                                    id="accordionTwo"
-                                    class="accordion-collapse collapse"
-                                    aria-labelledby="headingTwo"
-                                    data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    Dessert ice cream donut oat cake jelly-o pie sugar plum cheesecake. Bear claw dragée
-                                    oat cake
-                                    dragée ice cream halvah tootsie roll. Danish cake oat cake pie macaroon tart donut
-                                    gummies. Jelly
-                                    beans candy canes carrot cake. Fruitcake chocolate chupa chups.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card accordion-item">
-                            <h2 class="accordion-header" id="headingThree">
-                                <button
-                                        type="button"
-                                        class="accordion-button collapsed"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#accordionThree"
-                                        aria-expanded="false"
-                                        aria-controls="accordionThree">
-                                    What is regular license?
-                                </button>
-                            </h2>
-                            <div
-                                    id="accordionThree"
-                                    class="accordion-collapse collapse"
-                                    aria-labelledby="headingThree"
-                                    data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    Regular license can be used for end products that do not charge users for access or
-                                    service(access
-                                    is free and there will be no monthly subscription fee). Single regular license can
-                                    be used for
-                                    single end product and end product can be used by you or your client. If you want to
-                                    sell end
-                                    product to multiple clients then you will need to purchase separate license for each
-                                    client. The
-                                    same rule applies if you want to use the same end product on multiple domains(unique
-                                    setup). For
-                                    more info on regular license you can check official description.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card accordion-item">
-                            <h2 class="accordion-header" id="headingFour">
-                                <button
-                                        type="button"
-                                        class="accordion-button collapsed"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#accordionFour"
-                                        aria-expanded="false"
-                                        aria-controls="accordionFour">
-                                    What is extended license?
-                                </button>
-                            </h2>
-                            <div
-                                    id="accordionFour"
-                                    class="accordion-collapse collapse"
-                                    aria-labelledby="headingFour"
-                                    data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis et aliquid quaerat
-                                    possimus maxime!
-                                    Mollitia reprehenderit neque repellat deleniti delectus architecto dolorum maxime,
-                                    blanditiis
-                                    earum ea, incidunt quam possimus cumque.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card accordion-item">
-                            <h2 class="accordion-header" id="headingFive">
-                                <button
-                                        type="button"
-                                        class="accordion-button collapsed"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#accordionFive"
-                                        aria-expanded="false"
-                                        aria-controls="accordionFive">
-                                    Which license is applicable for SASS application?
-                                </button>
-                            </h2>
-                            <div
-                                    id="accordionFive"
-                                    class="accordion-collapse collapse"
-                                    aria-labelledby="headingFive"
-                                    data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi molestias
-                                    exercitationem ab cum
-                                    nemo facere voluptates veritatis quia, eveniet veniam at et repudiandae mollitia
-                                    ipsam quasi
-                                    labore enim architecto non!
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- FAQ: End -->
-
-
-
-</div>
+        </section>
     
+         {% if request.user.is_authenticated %}
+            <section class="pricing-free-trial bg-label-primary">
+              <div class="container">
+                <div class="position-relative">
+                  <div class="d-flex justify-content-between flex-column-reverse flex-lg-row align-items-center pt-12 pb-10">
+                    <div class="text-center text-lg-start">
+                      <h4 class="text-primary mb-2">Fan nomi (Imtihon turi)</h4>
+                      <p class="text-body mb-6 mb-md-11">Bu imtihon sizning o'z bilimingiz va malakangizni namoyish etish va sizning kuchingizni sinab ko'rish imkoniyatini beradi.</p>
+                      <a href="payment-page.html" class="btn btn-primary waves-effect waves-light">Boshlash</a>
+                    </div>
+                    <!-- image -->
+                    <div class="text-center">
+                      {% if request.user.gender == 'male' %}
+                        <img src="{% static 'assets/img/illustrations/card-advance-sale.png' %}" class="img-fluid me-lg-5 pe-lg-1 mb-3 mb-lg-0" width="202" alt="Start Exam">
+                      {% else %}
+                        <img src="{% static 'assets/img/illustrations/girl-with-laptop.png' %}" class="img-fluid me-lg-5 pe-lg-1 mb-3 mb-lg-0" alt="Start Exam" width="202">
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+        {% endif %}
+
+        <!-- FAQ: Start -->
+        <section id="landingFAQ" class="section-py bg-body landing-faq">
+            <div class="container">
+                <div class="text-center mb-3 pb-1">
+                    <span class="badge bg-label-primary">FAQ</span>
+                </div>
+                <h3 class="text-center mb-1">Avval bularni <span class="section-title">O'qib chiqing</span></h3>
+                <p class="text-center mb-5 pb-3">Imtihonlarda test javoblarini samarali tanlash uchun talabalar rivojlantirishlari kerak bo'lgan asosiy ko'nikmalar:</p>
+                <div class="row gy-5">
+                    <div class="col-lg-5">
+                        <div class="text-center">
+                            <img src="{% static 'assets/img/front-pages/landing-page/faq-boy-with-logos.png' %}" alt=" faq boy with logos" class="faq-image"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="accordion" id="accordionExample">
+                            <div class="card accordion-item active">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordionOne" aria-expanded="true" aria-controls="accordionOne">
+                                        Tarkibni bilish:
+                                    </button>
+                                </h2>
+
+                                <div id="accordionOne" class="accordion-collapse collapse show"
+                                     data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        Talabalar imtihon savollarini aniq o‘qib, tushuna olishlari kerak. Bu savolning asosiy elementlarini va qaysi turdagi javob izlanayotganini aniqlashni o'z ichiga oladi (masalan , bir nechta tanlov, qisqa javob, insho).
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionTwo" aria-expanded="false" aria-controls="accordionTwo">
+                                        Tanqidiy fikrlash va tahlil
+                                    </button>
+                                </h2>
+                                <div id="accordionTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        Talabalar savol va javob tanlovlarini tanqidiy tahlil qila olishlari kerak. Bu har bir javob tanlovi ortidagi mantiqni baholash va mumkin bo'lgan nomuvofiqliklar yoki xatolarni aniqlashni o'z ichiga oladi.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionThree" aria-expanded="false" aria-controls="accordionThree">
+                                        Vaqt boshqarish
+                                    </button>
+                                </h2>
+                                <div id="accordionThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        Vaqtni samarali boshqarish juda muhimdir. Talabalar imtihon davomida o'z javoblarini ko'rib chiqish uchun etarli vaqt ajratishlari kerak.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card accordion-item">
+                                <h2 class="accordion-header" id="headingFour">
+                                    <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionFour" aria-expanded="false" aria-controls="accordionFour">
+                                        Sinov tashvishlarini boshqarish
+                                    </button>
+                                </h2>
+                                <div id="accordionFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        Sinov tashvishi hukmni o'zgartirishi mumkin. Chuqur nafas olish, ijobiy o'z-o'zidan gapirish va vizualizatsiya mashqlari kabi usullar talabalarga imtihon paytida xotirjam va diqqatni jamlashga yordam beradi..
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card accordion-item">
+                                <h2 class="accordion-header" id="headingFive">
+                                    <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionFive" aria-expanded="false" aria-controls="accordionFive">
+                                        Nazorat Qilish
+                                    </button>
+                                </h2>
+                                <div id="accordionFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        Test javoblarini tanlashdan oldin qarshi kelgan xatolarni aniqlash va uning ustidan ishlash uchun yarim soatlik vaqt ajratish.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FAQ: End -->
+       
+    </div>
+
 {% endblock content %}

@@ -4,10 +4,11 @@ from django.urls import path
 from .employeeViews import employee_views, employee_list_json, get_employee_info, create_employee_from_api
 from .roleViews import group_list, create_group, create_default_groups, set_now_role, get_user_groups
 from .studentViews import save_student_from_api, create_student_from_api, get_student_info
-from .views import login_view
+from .views import login_view, logout
 
 login_patterns = [
     path('login', login_view, name='login'),
+    path('logout', logout, name='logout'),
 ]
 
 

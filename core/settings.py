@@ -14,6 +14,8 @@ LOCAL_APPS = [
     'authHemis',
     'account',
     'university',
+    'log',
+    'main'
 
 ]
 # Application definition
@@ -37,6 +39,8 @@ GLOBAL_APPS = [
     'django.contrib.staticfiles',
     'django.utils.translation',
 ]
+
+
 
 AUTH_USER_MODEL = 'account.CustomUser'
 
@@ -72,6 +76,25 @@ REST_FRAMEWORK = {
 
 ROOT_URLCONF = 'core.urls'
 
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': os.path.join(BASE_DIR, 'logging', 'django.log'),  # Path relative to BASE_DIR
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     },
+# }
 
 TEMPLATES = [
     {

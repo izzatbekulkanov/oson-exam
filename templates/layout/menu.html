@@ -37,7 +37,7 @@
                       </g>
                     </g>
                   </svg></span>
-                    <h2 class="brand-text mb-0">Vuexy</h2></a></li>
+                    <h2 class="brand-text mb-0">Oson Exam</h2></a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pe-0" data-bs-toggle="collapse"><i
                         class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i></a></li>
             </ul>
@@ -51,7 +51,7 @@
                         class="dropdown-toggle nav-link d-flex align-items-center" href="index.html"
                         data-bs-toggle="dropdown"><i data-feather='users'></i><span>Foydalanuvchilar</span></a>
                     <ul class="dropdown-menu" data-bs-popper="none">
-                        <li class="active" data-menu="">
+                        <li data-menu="">
                             <a class="dropdown-item d-flex align-items-center" href="dashboard-analytics.html" data-bs-toggle="">
                                 <i data-feather='users'></i>
                                 <span>Talabalar ro'yhati</span>
@@ -134,30 +134,54 @@
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown nav-item" data-menu="dropdown"><a
-                        class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown"><i
-                        data-feather="edit"></i><span data-i18n="Forms &amp; Tables">Sayt sozlamalari</span></a>
+                <li class="dropdown nav-item " data-menu="dropdown">
+                    <a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown">
+                        <i data-feather="edit"></i>
+                        <span>Sayt sozlamalari</span>
+                    </a>
                     <ul class="dropdown-menu" data-bs-popper="none">
-                        <li data-menu=""><a class="dropdown-item d-flex align-items-center" href="{% url 'settings_log' %}"
-                                            data-bs-toggle="" data-i18n="Table"><i data-feather="server"></i><span
-                                data-i18n="Table">Loglar</span></a>
-                        </li>
                         <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
                             <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                                <i data-feather="grid"></i>
-                                <span>Datatable</span>
+                                <i data-feather='smartphone'></i>
+                                <span>Qurilmalar</span>
                             </a>
                             <ul class="dropdown-menu" data-bs-popper="none">
-                                <li data-menu="">
-                                    <a class="dropdown-item d-flex align-items-center" href="table-datatable-basic.html" data-bs-toggle="">
+                                <li data-menu="" {% if request.path == '/main/all_device' %}class="active"{% endif %}>
+                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'all_device' %}" data-bs-toggle="">
                                         <i data-feather="circle"></i>
-                                        <span>Basic</span>
+                                        <span>Barcha qurilmalar</span>
                                     </a>
                                 </li>
                                 <li data-menu="">
                                     <a class="dropdown-item d-flex align-items-center" href="table-datatable-advanced.html" data-bs-toggle="">
                                         <i data-feather="circle"></i>
-                                        <span>Advanced</span>
+                                        <span>Ruxsat berilgan qurilmalar</span>
+                                    </a>
+                                </li>
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center" href="table-datatable-advanced.html" data-bs-toggle="">
+                                        <i data-feather="circle"></i>
+                                        <span>Taqiqlangan qurilmalar</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                <i data-feather='layers'></i>
+                                <span>Loglar</span>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="none">
+                                <li data-menu="" {% if request.path == '/log/settings_log' %}class="active"{% endif %}>
+                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'settings_log' %}" data-bs-toggle="">
+                                        <i data-feather="circle"></i>
+                                        <span>Kirish chiqish loglari</span>
+                                    </a>
+                                </li>
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center" href="table-datatable-advanced.html" data-bs-toggle="">
+                                        <i data-feather="circle"></i>
+                                        <span>Boshqa loglar</span>
                                     </a>
                                 </li>
                             </ul>

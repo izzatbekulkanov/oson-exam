@@ -1,0 +1,185 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <div class="card">
+                    <div class="row" id="table-hover-row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header col">
+                                    <h4 class="card-title">Tarmoqdagi barcha qurilmalar</h4>
+                                    <span>
+                                    <button id="saveAllDevices" class="btn btn btn-relief-primary">Yangilash</button>
+                                </span>
+                                </div>
+                                <div class="card-body col">
+
+                                </div>
+                                <div class="table-responsive">
+                                    <table id="deviceTable" class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>TR</th>
+                                                <th>ip_address</th>
+                                                <th>mac_address</th>
+                                                <th>manufacturer</th>
+                                                <th>status</th>
+                                                <th>Chekbox</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="deviceTableBody">
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}
+
+{% block script %}
+<script>
+$(document).ready(function() {
+     toastr.options = {
+        progressBar: true, // Progres bar ko'rsatish
+        positionClass: 'toast-bottom-right', // Pastki burchakda chiqarish
+        showMethod: 'slideDown', // Xabar ko'rsatish usuli
+        hideMethod: 'slideUp' // Xabarni yashirish usuli
+    };
+    // Yangilash tugmasi bosilganda
+    $('#saveAllDevices').click(function(e) {
+        e.preventDefault(); // Buni yozmasangiz, sahifani qayta yuklash jarayoniga tushadi
+        // AJAX so'rovi yuborish
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'save_all_devices' %}', // refresh_devices yo'lining URL manzili
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                // Display an info toast with no title
+                updateDevice()
+                toastr.success(response.message, 'Muvaffaqiyatli');
+                // Endi sahifani yangilash
+            },
+            error: function(error) {
+                toastr.error('Xatolik yuz berdi. Iltimos qayta urinib ko\'ring.', 'Xatolik');
+            }
+        });
+    });
+});
+
+function updateDevice() {
+    fetch('{% url 'device_list' %}')  // URL manzilini to'g'ri yozing
+        .then(response => response.json())
+        .then(data => {
+            const devices = data.devices;
+            const tableBody = document.getElementById('deviceTableBody');
+            tableBody.innerHTML = "";
+
+            devices.forEach((device, index) => {
+                let badgeClass = "badge-light-primary";
+                if (device.status === 'Tasdiqlangan') {
+                    badgeClass = "badge-light-success";
+                } else if (device.status === 'Tasdiqlanmagan') {
+                    badgeClass = "badge-light-warning";
+                } else if (device.status === 'Ta\'qiqlangan') {
+                    badgeClass = "badge-light-danger";
+                }
+
+                const isChecked = device.status === 'Tasdiqlangan' ? 'checked' : '';
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${device.ip_address}</td>
+                    <td>${device.mac_address}</td>
+                    <td>${device.manufacturer}</td>
+                    <td><span class="badge rounded-pill ${badgeClass} me-1">${device.status}</span></td>
+                    <td>
+                        <div class="form-check form-check-success">
+                            <input type="checkbox" class="form-check-input" id="colorCheck${index + 1}" ${isChecked} onchange="updateToDevice()">
+                            <label class="form-check-label" for="colorCheck${index + 1}">Tanlang</label>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => console.error('Qurilmalarni olishda xatolik:', error));
+}
+
+function updateToDevice() {
+    const checkboxes = document.querySelectorAll('.form-check-input:checked');
+    
+    if (checkboxes.length === 0) {
+        console.error('Hech qanday checkbox tanlanmagan');
+        return;
+    }
+
+    const lastChecked = checkboxes[checkboxes.length - 1];
+    const row = lastChecked.closest('tr');
+
+    if (!row) {
+        console.error('Qator topilmadi');
+        return;
+    }
+
+    const ip_address = row.querySelector('td:nth-child(2)').innerText; // innerText ishlatilgan
+    if (!ip_address) {
+        console.error('IP manzil topilmadi');
+        return;
+    }
+    
+    fetch('{% url 'update_device_status' %}', {  // URL manzilini to'g'ri yozing
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({ ip_addresses: [ip_address] })  // JSON manzilini to'g'ri yozing
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            toastr.success(data.message, 'Muvaffaqiyatli', {
+                positionClass: 'toast-bottom-right'
+            });
+            updateDevice(); // Jadvallarni yangilash
+        } else {
+            toastr.error(data.message, 'Xatolik', {
+                positionClass: 'toast-bottom-right'
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Xatolik yuz berdi:', error);
+        toastr.error('So\'rovni bajaramayapman. Iltimos, qayta urinib ko\'ring.', 'Xatolik', {
+            positionClass: 'toast-bottom-right'
+        });
+    });
+}
+</script>
+
+    <script>
+    $(document).ready(function() {
+        updateDevice();
+        
+    });
+    </script>
+
+{% endblock script %}

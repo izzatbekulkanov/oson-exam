@@ -11,67 +11,21 @@
         <div class="content-body"><!-- Dashboard Analytics Start -->
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Recent devices</h4>
+                <h4 class="card-title">Kirish va chiqish loglari</h4>
             </div>
-            <div class="table-responsive">
-                <table class="table text-nowrap text-center">
+            <div class="table-responsive" id="logTable">
+                 <table id="logEntriesTable" class="table text-nowrap text-center">
                     <thead>
-                    <tr>
-                        <th class="text-start">BROWSER</th>
-                        <th>DEVICE</th>
-                        <th>LOCATION</th>
-                        <th>RECENT ACTIVITY</th>
-                    </tr>
+                        <tr>
+                            <th class="text-start">TR</th>
+                            <th class="text-start">Browser</th>
+                            <th>IP Address</th>
+                            <th>Time</th>
+                            <th>Type</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="text-start">
-                            <div class="avatar me-25">
-                                <img src="../../../app-assets/images/icons/google-chrome.png" alt="avatar" width="20"
-                                     height="20">
-                            </div>
-                            <span class="fw-bolder">Chrome on Windows</span>
-                        </td>
-                        <td>Dell XPS 15</td>
-                        <td>United States</td>
-                        <td>10, Jan 2021 20:07</td>
-                    </tr>
-                    <tr>
-                        <td class="text-start">
-                            <div class="avatar me-25">
-                                <img src="../../../app-assets/images/icons/google-chrome.png" alt="avatar" width="20"
-                                     height="20">
-                            </div>
-                            <span class="fw-bolder">Chrome on Android</span>
-                        </td>
-                        <td>Google Pixel 3a</td>
-                        <td>Ghana</td>
-                        <td>11, Jan 2021 10:16</td>
-                    </tr>
-                    <tr>
-                        <td class="text-start">
-                            <div class="avatar me-25">
-                                <img src="../../../app-assets/images/icons/google-chrome.png" alt="avatar" width="20"
-                                     height="20">
-                            </div>
-                            <span class="fw-bolder">Chrome on MacOS</span>
-                        </td>
-                        <td>Apple iMac</td>
-                        <td>Mayotte</td>
-                        <td>11, Jan 2021 12:10</td>
-                    </tr>
-                    <tr>
-                        <td class="text-start">
-                            <div class="avatar me-25">
-                                <img src="../../../app-assets/images/icons/google-chrome.png" alt="avatar" width="20"
-                                     height="20">
-                            </div>
-                            <span class="fw-bolder">Chrome on iPhone</span>
-                        </td>
-                        <td>Apple iPhone XR</td>
-                        <td>Mauritania</td>
-                        <td>12, Jan 2021 8:29</td>
-                    </tr>
+                        <!-- Logs will be dynamically added here -->
                     </tbody>
                 </table>
             </div>
@@ -81,3 +35,54 @@
     
     </div>
 {% endblock content %}
+
+{% block script %}
+    <!-- Include Axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+  console.log('adsadsadasd')
+
+        function fetchLogs() {
+            $.ajax({
+                url: '{% url 'entry_logging' %}',
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    
+                    console.log(response)
+                    const logs = response;
+                    const tableBody = $('#logEntriesTable tbody');
+                    tableBody.empty(); // Clear existing table rows
+
+                    // Iterate over logs and create table rows
+                    $.each(logs, function(index, log) {
+                        const row = `<tr>
+                            <td>${index + 1}</td>
+                            <td class="text-start">
+                                <div class="avatar me-25">
+                                    <img src="{% static 'assets/images/icons/google-chrome.png' %}" alt="avatar" width="20" height="20">
+                                </div>
+                                <span class="fw-bolder">${log.browser_name}</span>
+                            </td>
+                            <td>${log.global_ip}</td>
+                            <td>${log.timestamp}</td>
+                            <td>${log.level}</td>
+                        </tr>`;
+                        tableBody.append(row);
+                    });
+                },
+                error: function(error) {
+                    console.log('sadasdasdasdqwe323234')
+                    console.error('Error fetching logs:', error);
+                }
+            });
+        }
+        
+        console.log('asdsadasdaaasdasd')
+              // Function to fetch and display logs using jQuery Ajax
+        $(document).ready(function() {
+            fetchLogs();
+        });
+    </script>
+    
+{% endblock script %}

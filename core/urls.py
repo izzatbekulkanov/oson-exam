@@ -13,6 +13,8 @@ urlpatterns = [
     path('user/', include('account.urls')),
     path('', include('exam.urls')),
     path('hemis/', include('authHemis.urls')),  # Hemis autentifikatsiya sahifasi
+    path('main/', include('main.urls')),  # Hemis autentifikatsiya sahifasi
+    path('log/', include('log.urls')),  # Hemis autentifikatsiya sahifasi
     path('edu/', include('university.urls')),  # Hemis autentifikatsiya sahifasi path('lib/', include('library.urls')),  # Hemis autentifikatsiya sahifasi
 
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
