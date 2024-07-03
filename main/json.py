@@ -28,6 +28,47 @@ def get_network_devices(request):
 
     return JsonResponse({'devices': device_list})
 
+def get_network_allow_devices(request):
+    # Tasdiqlangan qurilmalarni filtrlaymiz
+    devices = NetworkDevice.objects.filter(status='Tasdiqlangan')
+
+    device_list = []
+    for device in devices:
+        # Qurilma ma'lumotlarini olish va ro'yxatga qo'shish
+        device_info = {
+            'ip_address': device.ip_address,
+            'mac_address': device.mac_address,
+            'manufacturer': device.manufacturer,
+            'status': device.status,
+            'user_name': device.user_name,
+            'device_name': device.device_name
+        }
+        device_list.append(device_info)
+
+    # Tasdiqlangan qurilmalar ro'yxatini JSON formatida qaytarish
+    return JsonResponse({'devices': device_list})
+
+def get_network_deny_devices(request):
+    # Taqiqlangan qurilmalarni filtrlaymiz
+    devices = NetworkDevice.objects.filter(status='Ta\'qiqlangan')
+
+    device_list = []
+    for device in devices:
+        # Qurilma ma'lumotlarini olish va ro'yxatga qo'shish
+        device_info = {
+            'ip_address': device.ip_address,
+            'mac_address': device.mac_address,
+            'manufacturer': device.manufacturer,
+            'status': device.status,
+            'user_name': device.user_name,
+            'device_name': device.device_name
+        }
+        device_list.append(device_info)
+
+    # Taqiqlangan qurilmalar ro'yxatini JSON formatida qaytarish
+    return JsonResponse({'devices': device_list})
+
+
 
 @csrf_exempt  # CSRF ni ochirish
 def save_all_devices(request):
@@ -72,13 +113,15 @@ def update_device_status(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
-            print(data)
-            ip_address = data.get('ip_address', None)  # Tugma yoki tugmalarning IP manzili
+            ip_address = data.get('ip_addresses', None)  # Tugma yoki tugmalarning IP manzili
             print(ip_address)
 
             if ip_address:
+                print(ip_address)
+                ip_address = ip_address[0]
                 # Qidirish va yangilash
                 device = NetworkDevice.objects.filter(ip_address=ip_address).first()
+                print(device)
                 if device:
                     if device.status == 'Tasdiqlangan':
                         device.status = 'Tasdiqlanmagan'  # Agar hozirgi status 'Tasdiqlangan' bo'lsa 'Tasdiqlanmagan' ga o'zgartiramiz

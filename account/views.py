@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as django_logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.utils import timezone
 
@@ -76,3 +77,15 @@ def save_log(request, level, message):
         global_ip=global_ip,
     )
 
+
+@login_required
+def student_list(request):
+    return render(request, 'pages/users/student_list.html')
+
+@login_required
+def employee_list(request):
+    return render(request, 'pages/users/employee_list.html')
+
+@login_required
+def user_list(request):
+    return render(request, 'pages/users/user_list.html')

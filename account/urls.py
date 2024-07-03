@@ -4,7 +4,7 @@ from django.urls import path
 from .employeeViews import employee_views, employee_list_json, get_employee_info, create_employee_from_api
 from .roleViews import group_list, create_group, create_default_groups, set_now_role, get_user_groups
 from .studentViews import save_student_from_api, create_student_from_api, get_student_info
-from .views import login_view, logout
+from .views import login_view, logout, student_list, employee_list, user_list
 
 login_patterns = [
     path('login', login_view, name='login'),
@@ -37,6 +37,9 @@ role_permissions = [
 
 views_patterns = [
     # Hodimlar haqida ma'lumotni olish uchun URL
+    path('student_list', student_list, name='student_list'),
+    path('employee_list', employee_list, name='employee_list'),
+    path('user_list', user_list, name='user_list'),
 
 ]
 

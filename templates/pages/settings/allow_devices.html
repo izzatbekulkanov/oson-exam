@@ -16,9 +16,8 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header col">
-                                    <h4 class="card-title">Tarmoqdagi barcha qurilmalar</h4>
+                                    <h4 class="card-title">Tarmoqga kirish uchun ruxsat berilgan qurilmalar</h4>
                                     <span>
-                                        <button id="saveAllDevices" class="btn btn btn-relief-primary">Yangilash</button>
                                         
                                     </span>
                                 </div>
@@ -61,41 +60,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     updateDevice();
 
-    document.getElementById('saveAllDevices').addEventListener('click', saveAllDevices);
+   
     document.getElementById('search_ip_or_mac_btn').addEventListener('click', searchDevice);
 });
 
-function saveAllDevices() {
-    btn = document.getElementById('saveAllDevices')
-    btn.innerText = 'Yuklanmoqda'
-    fetch('{% url "save_all_devices" %}', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': '{{ csrf_token }}'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            btn.innerText = 'Yangilash'
-            toastr.success(data.message, 'Muvaffaqiyatli', {
-                positionClass: 'toast-bottom-right',
-                progressBar: true
-            });
-        } else {
-            btn.innerText = 'Yangilash'
-            toastr.error(data.message, 'Xatolik', {
-                positionClass: 'toast-bottom-right',
-                progressBar: true
-            });
-        }
-    })
-    .catch(error => console.error('Saqlashda hatolik:', error));
-}
 
 function updateDevice() {
-    fetch('{% url "device_list" %}')
+    fetch('{% url "allow_device_list" %}')
         .then(response => response.json())
         .then(data => {
             displayDevices(data.devices);
@@ -140,7 +111,7 @@ function displayDevices(devices) {
 function searchDevice() {
     const searchInput = document.getElementById('searchInput').value.toLowerCase();
 
-    fetch('{% url "device_list" %}')
+    fetch('{% url "allow_device_list" %}')
         .then(response => response.json())
         .then(data => {
             const filteredDevices = data.devices.filter(device => {
@@ -172,22 +143,19 @@ function updateToDevice(checkbox) {
     .then(data => {
         if (data.success) {
             toastr.success(data.message, 'Muvaffaqiyatli', {
-                positionClass: 'toast-bottom-right',
-                progressBar: true
+                positionClass: 'toast-bottom-right'
             });
             updateDevice();
         } else {
             toastr.error(data.message, 'Xatolik', {
-                positionClass: 'toast-bottom-right',
-                progressBar: true
+                positionClass: 'toast-bottom-right'
             });
         }
     })
     .catch(error => {
         console.error('Xatolik yuz berdi:', error);
         toastr.error('So\'rovni bajaramayapman. Iltimos, qayta urinib ko\'ring.', 'Xatolik', {
-            positionClass: 'toast-bottom-right',
-            progressBar: true
+            positionClass: 'toast-bottom-right'
         });
     });
 }

@@ -3,8 +3,12 @@ import re
 
 def get_network_devicess():
     try:
-        # arp-scan orqali tarmoqni skanerlash
-        result = subprocess.run(['sudo', 'arp-scan', '-l'], capture_output=True, text=True, check=True)
+        # Sudo parolini saqlash
+        sudo_password = ' '
+
+        # Sudo buyruqni parol bilan birga ishga tushirish
+        result = subprocess.run(['sudo', '-S', 'arp-scan', '-l'],
+                                capture_output=True, text=True, input=sudo_password + '\n', check=True)
 
         devices = []
         lines = result.stdout.strip().split('\n')
@@ -32,3 +36,4 @@ def get_network_devicess():
     except Exception as e:
         print(f"An error occurred: {e}")
         return []
+

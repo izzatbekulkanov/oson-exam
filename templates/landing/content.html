@@ -11,31 +11,34 @@
                     </div>
                 </div>
             </div>
-
         </section>
     
-         {% if request.user.is_authenticated %}
-            <section class="pricing-free-trial bg-label-primary">
-              <div class="container">
-                <div class="position-relative">
-                  <div class="d-flex justify-content-between flex-column-reverse flex-lg-row align-items-center pt-12 pb-10">
-                    <div class="text-center text-lg-start">
-                      <h4 class="text-primary mb-2">Fan nomi (Imtihon turi)</h4>
-                      <p class="text-body mb-6 mb-md-11">Bu imtihon sizning o'z bilimingiz va malakangizni namoyish etish va sizning kuchingizni sinab ko'rish imkoniyatini beradi.</p>
-                      <a href="payment-page.html" class="btn btn-primary waves-effect waves-light">Boshlash</a>
-                    </div>
-                    <!-- image -->
-                    <div class="text-center">
-                      {% if request.user.gender == 'male' %}
-                        <img src="{% static 'assets/img/illustrations/card-advance-sale.png' %}" class="img-fluid me-lg-5 pe-lg-1 mb-3 mb-lg-0" width="202" alt="Start Exam">
-                      {% else %}
-                        <img src="{% static 'assets/img/illustrations/girl-with-laptop.png' %}" class="img-fluid me-lg-5 pe-lg-1 mb-3 mb-lg-0" alt="Start Exam" width="202">
-                      {% endif %}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
+        {% if request.user.is_authenticated %}
+            {% for device in tasdiqlangan_devices %}
+                {% if device.ip_address == request.real_ip %}
+                    <section class="pricing-free-trial bg-label-primary">
+                        <div class="container">
+                            <div class="position-relative">
+                                <div class="d-flex justify-content-between flex-column-reverse flex-lg-row align-items-center pt-12 pb-10">
+                                    <div class="text-center text-lg-start">
+                                        <h4 class="text-primary mb-2">Fan nomi (Imtihon turi)</h4>
+                                        <p class="text-body mb-6 mb-md-11">Bu imtihon sizning o'z bilimingiz va malakangizni namoyish etish va sizning kuchingizni sinab ko'rish imkoniyatini beradi.</p>
+                                        <a href="payment-page.html" class="btn btn-primary waves-effect waves-light">Boshlash</a>
+                                    </div>
+                                    <!-- image -->
+                                    <div class="text-center">
+                                        {% if request.user.gender == 'male' %}
+                                            <img src="{% static 'assets/img/illustrations/card-advance-sale.png' %}" class="img-fluid me-lg-5 pe-lg-1 mb-3 mb-lg-0" width="202" alt="Start Exam">
+                                        {% else %}
+                                            <img src="{% static 'assets/img/illustrations/girl-with-laptop.png' %}" class="img-fluid me-lg-5 pe-lg-1 mb-3 mb-lg-0" alt="Start Exam" width="202">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                {% endif %}
+            {% endfor %}
         {% endif %}
 
         <!-- FAQ: Start -->

@@ -1,0 +1,320 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+{% block style %}
+        
+{% endblock style %}
+{% block content %}
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-header row"></div>
+            <div class="content-body">
+          <h3>Roles List</h3>
+<p class="mb-2">
+  Rol oldindan belgilangan menyular va xususiyatlarga kirishni ta'minladi, shuning uchun qarab <br />
+  tayinlangan rol bo'yicha ma'mur o'zi kerak bo'lgan narsaga kirishi mumkin
+</p>
+
+<!-- Role cards -->
+<div class="row" id="group-container">
+  <!-- Ma'lumotlar bu yerga joylashtiriladi -->
+</div>
+<!--/ Role cards -->
+
+<h3 class="mt-50">Rollari bilan jami foydalanuvchilar</h3>
+<p class="mb-2">Kompaniyangizning barcha ma'mur hisoblarini va ularning sherik rollarini toping.</p>
+<!-- table -->
+<div class="card">
+  
+</div>
+<!-- table -->
+          <!-- Add Role Modal -->
+<div class="modal fade" id="addRoleModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-add-new-role">
+    <div class="modal-content">
+      <div class="modal-header bg-transparent">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body px-5 pb-5">
+        <div class="text-center mb-4">
+          <h1 class="role-title">Role ni tahrirlash</h1>
+          <p>Rol ruxsatlarini o'rnating</p>
+        </div>
+        <!-- Add role form -->
+        <form id="addRoleForm" class="row" onsubmit="return false">
+          <div class="col-12">
+            <label class="form-label" for="modalRoleName">Rol nomi</label>
+            <input type="text" id="modalRoleName" name="modalRoleName" class="form-control" placeholder="Enter role name" tabindex="-1" data-msg="Please enter role name"/>
+          </div>
+          <div class="col-12">
+            <h4 class="mt-2 pt-50">Rol ruxsatnomalari</h4>
+            <!-- Permission table -->
+            <div class="table-responsive">
+              <table class="table table-flush-spacing">
+                <tbody>
+                  <tr>
+                    <td class="text-nowrap fw-bolder">
+                      Administrator ruxsati
+                      <span data-bs-toggle="tooltip" data-bs-placement="top" title="Allows a full access to the system">
+                        <i data-feather="info"></i>
+                      </span>
+                    </td>
+                    <td>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="selectAll" />
+                        <label class="form-check-label" for="selectAll"> Select All </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-nowrap fw-bolder">Foydalanuvchi boshqaruvi</td>
+                    <td>
+                      <div class="d-flex">
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="userManagementRead" />
+                          <label class="form-check-label" for="userManagementRead"> Read </label>
+                        </div>
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="userManagementWrite" />
+                          <label class="form-check-label" for="userManagementWrite"> Write </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="userManagementCreate" />
+                          <label class="form-check-label" for="userManagementCreate"> Create </label>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-nowrap fw-bolder">Kontentni boshqarish</td>
+                    <td>
+                      <div class="d-flex">
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="contentManagementRead" />
+                          <label class="form-check-label" for="contentManagementRead"> Read </label>
+                        </div>
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="contentManagementWrite" />
+                          <label class="form-check-label" for="contentManagementWrite"> Write </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="contentManagementCreate" />
+                          <label class="form-check-label" for="contentManagementCreate"> Create </label>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-nowrap fw-bolder">Nizolarni boshqarish</td>
+                    <td>
+                      <div class="d-flex">
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="dispManagementRead" />
+                          <label class="form-check-label" for="dispManagementRead"> Read </label>
+                        </div>
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="dispManagementWrite" />
+                          <label class="form-check-label" for="dispManagementWrite"> Write </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="dispManagementCreate" />
+                          <label class="form-check-label" for="dispManagementCreate"> Create </label>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-nowrap fw-bolder">Ma'lumotlar bazasini boshqarish</td>
+                    <td>
+                      <div class="d-flex">
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="dbManagementRead" />
+                          <label class="form-check-label" for="dbManagementRead"> Read </label>
+                        </div>
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="dbManagementWrite" />
+                          <label class="form-check-label" for="dbManagementWrite"> Write </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="dbManagementCreate" />
+                          <label class="form-check-label" for="dbManagementCreate"> Create </label>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-nowrap fw-bolder">Moliyaviy menejment</td>
+                    <td>
+                      <div class="d-flex">
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="finManagementRead" />
+                          <label class="form-check-label" for="finManagementRead"> Read </label>
+                        </div>
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="finManagementWrite" />
+                          <label class="form-check-label" for="finManagementWrite"> Write </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="finManagementCreate" />
+                          <label class="form-check-label" for="finManagementCreate"> Create </label>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-nowrap fw-bolder">Hisobot</td>
+                    <td>
+                      <div class="d-flex">
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="reportingRead" />
+                          <label class="form-check-label" for="reportingRead"> Read </label>
+                        </div>
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="reportingWrite" />
+                          <label class="form-check-label" for="reportingWrite"> Write </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="reportingCreate" />
+                          <label class="form-check-label" for="reportingCreate"> Create </label>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-nowrap fw-bolder">API nazorati</td>
+                    <td>
+                      <div class="d-flex">
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="apiRead" />
+                          <label class="form-check-label" for="apiRead"> Read </label>
+                        </div>
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="apiWrite" />
+                          <label class="form-check-label" for="apiWrite"> Write </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="apiCreate" />
+                          <label class="form-check-label" for="apiCreate"> Create </label>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-nowrap fw-bolder">Repozitariy boshqaruvi</td>
+                    <td>
+                      <div class="d-flex">
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="repoRead" />
+                          <label class="form-check-label" for="repoRead"> Read </label>
+                        </div>
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="repoWrite" />
+                          <label class="form-check-label" for="repoWrite"> Write </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="repoCreate" />
+                          <label class="form-check-label" for="repoCreate"> Create </label>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-nowrap fw-bolder">Ish haqi</td>
+                    <td>
+                      <div class="d-flex">
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="payrollRead" />
+                          <label class="form-check-label" for="payrollRead"> Read </label>
+                        </div>
+                        <div class="form-check me-3 me-lg-5">
+                          <input class="form-check-input" type="checkbox" id="payrollWrite" />
+                          <label class="form-check-label" for="payrollWrite"> Write </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="payrollCreate" />
+                          <label class="form-check-label" for="payrollCreate"> Create </label>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- Permission table -->
+          </div>
+          <div class="col-12 text-center mt-2">
+            <button type="submit" class="btn btn-primary me-1">Submit</button>
+            <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
+              Discard
+            </button>
+          </div>
+        </form>
+        <!--/ Add role form -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Add Role Modal -->
+
+        </div>
+        </div>
+
+    </div>
+{% endblock content %}
+
+{% block script %}
+        <!-- BEGIN: Page JS-->
+    
+    <script>
+$(document).ready(function() {
+    // Ma'lumotlarni olish uchun AJAX chaqirig'i
+    $.ajax({
+        url: '{% url "group_list" %}', // URL ko'rinishi
+        type: 'GET',
+        success: function(data) {
+            var groupContainer = $('#group-container');
+            groupContainer.empty(); // Containerni tozalash
+
+            // Har bir guruh uchun HTML yaratish
+            data.forEach(function(group) {
+                var usersHTML = '';
+                group.users.forEach(function(user, index) {
+                    usersHTML += `
+                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="${user.initials}" class="avatar avatar-sm pull-up">
+                            <img class="rounded-circle" src="{% static 'assets/images/avatars/${index + 2}.png' %}" alt="Avatar" />
+                        </li>`;
+                });
+
+                var groupHTML = `
+                <div class="col-xl-4 col-lg-6 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <span>Jami ${group.users.length} foydalanuvchi</span>
+                                <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
+                                    ${usersHTML}
+                                </ul>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-end mt-1 pt-25">
+                                <div class="role-heading">
+                                    <h4 class="fw-bolder">${group.name}</h4>
+                                    <a href="javascript:;" class="role-edit-modal" data-bs-toggle="modal" data-bs-target="#addRoleModal">
+                                        <small class="fw-bolder">Rol tahrirlash</small>
+                                    </a>
+                                </div>
+                                <a href="javascript:void(0);" class="text-body"><i data-feather="copy" class="font-medium-5"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+
+                groupContainer.append(groupHTML);
+            });
+        }
+    });
+});
+</script>
+  
+    <!-- END: Page JS-->
+{% endblock script %}

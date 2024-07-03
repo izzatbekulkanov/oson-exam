@@ -51,25 +51,23 @@
                         class="dropdown-toggle nav-link d-flex align-items-center" href="index.html"
                         data-bs-toggle="dropdown"><i data-feather='users'></i><span>Foydalanuvchilar</span></a>
                     <ul class="dropdown-menu" data-bs-popper="none">
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="dashboard-analytics.html" data-bs-toggle="">
+                        <li data-menu="" {% if request.path == '/user/student_list' %}class="active"{% endif %}>
+                            <a class="dropdown-item d-flex align-items-center" href="{% url 'student_list' %}"
+                               data-bs-toggle="">
                                 <i data-feather='users'></i>
                                 <span>Talabalar ro'yhati</span>
                             </a>
-                            
+
                         </li>
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="dashboard-ecommerce.html" data-bs-toggle="">
-                                <i data-feather='users'></i>
-                                <span>Akademik guruhlar ro'yhati</span></a>
-                        </li>
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="dashboard-ecommerce.html" data-bs-toggle="">
+                        <li data-menu="" {% if request.path == '/user/employee_list' %}class="active"{% endif %}>
+                            <a class="dropdown-item d-flex align-items-center" href="{% url 'employee_list' %}"
+                               data-bs-toggle="">
                                 <i data-feather='users'></i>
                                 <span>Hodimlar ro'yhati</span></a>
                         </li>
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="dashboard-ecommerce.html" data-bs-toggle="">
+                        <li data-menu="" {% if request.path == '/user/user_list' %}class="active"{% endif %}>
+                            <a class="dropdown-item d-flex align-items-center" href="{% url 'user_list' %}"
+                               data-bs-toggle="">
                                 <i data-feather='users'></i>
                                 <span>Foydalanuvchilar</span></a>
                         </li>
@@ -78,19 +76,29 @@
                 <li class="dropdown nav-item" data-menu="dropdown"><a
                         class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown">
                     <i data-feather='edit'></i>
-                    <span >Imtihonlar</span></a>
+                    <span>Imtihonlar</span></a>
                     <ul class="dropdown-menu" data-bs-popper="none">
                         <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="app-email.html" data-bs-toggle=""><i data-feather='file'></i><span>Fanlar</span></a>
+                            <a class="dropdown-item d-flex align-items-center" href="app-email.html"
+                               data-bs-toggle=""><i data-feather='file'></i><span>Fanlar</span></a>
+                        </li>
+                         <li data-menu="" {% if request.path == '/user/settings_log' %}class="active"{% endif %}>
+                            <a class="dropdown-item d-flex align-items-center" href=""
+                               data-bs-toggle="">
+                                <i data-feather='users'></i>
+                                <span>Akademik guruhlar ro'yhati</span></a>
                         </li>
                         <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="app-chat.html" data-bs-toggle="" ><i data-feather='help-circle'></i><span >Savollar</span></a>
+                            <a class="dropdown-item d-flex align-items-center" href="app-chat.html" data-bs-toggle=""><i
+                                    data-feather='help-circle'></i><span>Savollar</span></a>
                         </li>
                         <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="app-todo.html" data-bs-toggle=""><i data-feather='file-text'></i><span>Imtihonlar</span></a>
+                            <a class="dropdown-item d-flex align-items-center" href="app-todo.html" data-bs-toggle=""><i
+                                    data-feather='file-text'></i><span>Imtihonlar</span></a>
                         </li>
                         <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="app-calendar.html" data-bs-toggle=""><i data-feather="calendar"></i><span>Calendar</span></a>
+                            <a class="dropdown-item d-flex align-items-center" href="app-calendar.html"
+                               data-bs-toggle=""><i data-feather="calendar"></i><span>Calendar</span></a>
                         </li>
                     </ul>
                 </li>
@@ -100,8 +108,9 @@
                         <span>HEMIS ma'lumotlari</span>
                     </a>
                     <ul class="dropdown-menu" data-bs-popper="none">
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="{% url 'api_key' %}" data-bs-toggle="">
+                        <li data-menu="" {% if request.path == '/api_key' %}class="active"{% endif %}>
+                            <a class="dropdown-item d-flex align-items-center" href="{% url 'api_key' %}"
+                               data-bs-toggle="">
                                 <i data-feather='key'></i>
                                 <span>API Key</span>
                             </a>
@@ -113,75 +122,24 @@
                             </a>
                         </li>
                         <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
-                            <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#"
+                               data-bs-toggle="dropdown">
                                 <i data-feather="credit-card"></i>
                                 <span>Boshqa</span>
                             </a>
                             <ul class="dropdown-menu" data-bs-popper="none">
                                 <li data-menu="">
-                                    <a class="dropdown-item d-flex align-items-center" href="card-basic.html" data-bs-toggle="">
+                                    <a class="dropdown-item d-flex align-items-center" href="card-basic.html"
+                                       data-bs-toggle="">
                                         <i data-feather="circle"></i>
                                         <span>1</span>
                                     </a>
                                 </li>
                                 <li data-menu="">
-                                    <a class="dropdown-item d-flex align-items-center" href="card-advance.html" data-bs-toggle="">
+                                    <a class="dropdown-item d-flex align-items-center" href="card-advance.html"
+                                       data-bs-toggle="">
                                         <i data-feather="circle"></i>
                                         <span>2</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown nav-item " data-menu="dropdown">
-                    <a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown">
-                        <i data-feather="edit"></i>
-                        <span>Sayt sozlamalari</span>
-                    </a>
-                    <ul class="dropdown-menu" data-bs-popper="none">
-                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
-                            <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                                <i data-feather='smartphone'></i>
-                                <span>Qurilmalar</span>
-                            </a>
-                            <ul class="dropdown-menu" data-bs-popper="none">
-                                <li data-menu="" {% if request.path == '/main/all_device' %}class="active"{% endif %}>
-                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'all_device' %}" data-bs-toggle="">
-                                        <i data-feather="circle"></i>
-                                        <span>Barcha qurilmalar</span>
-                                    </a>
-                                </li>
-                                <li data-menu="">
-                                    <a class="dropdown-item d-flex align-items-center" href="table-datatable-advanced.html" data-bs-toggle="">
-                                        <i data-feather="circle"></i>
-                                        <span>Ruxsat berilgan qurilmalar</span>
-                                    </a>
-                                </li>
-                                <li data-menu="">
-                                    <a class="dropdown-item d-flex align-items-center" href="table-datatable-advanced.html" data-bs-toggle="">
-                                        <i data-feather="circle"></i>
-                                        <span>Taqiqlangan qurilmalar</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
-                            <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                                <i data-feather='layers'></i>
-                                <span>Loglar</span>
-                            </a>
-                            <ul class="dropdown-menu" data-bs-popper="none">
-                                <li data-menu="" {% if request.path == '/log/settings_log' %}class="active"{% endif %}>
-                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'settings_log' %}" data-bs-toggle="">
-                                        <i data-feather="circle"></i>
-                                        <span>Kirish chiqish loglari</span>
-                                    </a>
-                                </li>
-                                <li data-menu="">
-                                    <a class="dropdown-item d-flex align-items-center" href="table-datatable-advanced.html" data-bs-toggle="">
-                                        <i data-feather="circle"></i>
-                                        <span>Boshqa loglar</span>
                                     </a>
                                 </li>
                             </ul>
@@ -191,23 +149,26 @@
                 <li class="dropdown nav-item" data-menu="dropdown">
                     <a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown">
                         <i data-feather="bar-chart-2"></i>
-                        <span>Administrator</span>
+                        <span>Sayt sozlamari</span>
                     </a>
                     <ul class="dropdown-menu" data-bs-popper="none">
                         <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
-                            <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#"
+                               data-bs-toggle="dropdown">
                                 <i data-feather="pie-chart"></i>
                                 <span>Charts</span>
                             </a>
                             <ul class="dropdown-menu" data-bs-popper="none">
                                 <li data-menu="">
-                                    <a class="dropdown-item d-flex align-items-center" href="chart-apex.html" data-bs-toggle="">
+                                    <a class="dropdown-item d-flex align-items-center" href="chart-apex.html"
+                                       data-bs-toggle="">
                                         <i data-feather="circle"></i>
                                         <span>Apex</span>
                                     </a>
                                 </li>
                                 <li data-menu="">
-                                    <a class="dropdown-item d-flex align-items-center" href="chart-chartjs.html" data-bs-toggle="">
+                                    <a class="dropdown-item d-flex align-items-center" href="chart-chartjs.html"
+                                       data-bs-toggle="">
                                         <i data-feather="circle"></i>
                                         <span>Chartjs</span>
                                     </a>
@@ -215,13 +176,100 @@
                             </ul>
                         </li>
                         <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="maps-leaflet.html" data-bs-toggle="">
+                            <a class="dropdown-item d-flex align-items-center" href="maps-leaflet.html"
+                               data-bs-toggle="">
                                 <i data-feather="map"></i>
                                 <span>Leaflet Maps</span>
                             </a>
                         </li>
                     </ul>
                 </li>
+                <li class="dropdown nav-item " data-menu="dropdown">
+                    <a class="dropdown-toggle nav-link d-flex align-items-center" href="#" data-bs-toggle="dropdown">
+                        <i data-feather="edit"></i>
+                        <span>Administrator</span>
+                    </a>
+                    <ul class="dropdown-menu" data-bs-popper="none">
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#"
+                               data-bs-toggle="dropdown">
+                                <i data-feather='smartphone'></i>
+                                <span>Qurilmalar</span>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="none">
+                                <li data-menu="" {% if request.path == '/main/all_device' %}class="active"{% endif %}>
+                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'all_device' %}"
+                                       data-bs-toggle="">
+                                        <i data-feather="circle"></i>
+                                        <span>Barcha qurilmalar</span>
+                                    </a>
+                                </li>
+                                <li data-menu=""
+                                    {% if request.path == '/main/allow_devices' %}class="active"{% endif %}>
+                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'allow_devices' %}"
+                                       data-bs-toggle="">
+                                        <i data-feather="circle"></i>
+                                        <span>Ruxsat berilgan qurilmalar</span>
+                                    </a>
+                                </li>
+                                <li data-menu="" {% if request.path == '/main/deny_devices' %}class="active"{% endif %}>
+                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'deny_devices' %}"
+                                       data-bs-toggle="">
+                                        <i data-feather="circle"></i>
+                                        <span>Taqiqlangan qurilmalar</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#"
+                               data-bs-toggle="dropdown">
+                                <i data-feather='layers'></i>
+                                <span>Loglar</span>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="none">
+                                <li data-menu="" {% if request.path == '/log/settings_log' %}class="active"{% endif %}>
+                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'settings_log' %}"
+                                       data-bs-toggle="">
+                                        <i data-feather="circle"></i>
+                                        <span>Kirish chiqish loglari</span>
+                                    </a>
+                                </li>
+                                <li data-menu="">
+                                    <a class="dropdown-item d-flex align-items-center"
+                                       href="table-datatable-advanced.html" data-bs-toggle="">
+                                        <i data-feather="circle"></i>
+                                        <span>Boshqa loglar</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu">
+                            <a class="dropdown-item d-flex align-items-center dropdown-toggle" href="#"
+                               data-bs-toggle="dropdown">
+                                <i data-feather='pocket'></i>
+                                <span>Rollar</span>
+                            </a>
+                            <ul class="dropdown-menu" data-bs-popper="none">
+                                <li data-menu="" {% if request.path == '/main/system_role' %}class="active"{% endif %}>
+                                    <a class="dropdown-item d-flex align-items-center" href="{% url 'system_role' %}"
+                                       data-bs-toggle="">
+                                        <i data-feather="circle"></i>
+                                        <span>Tizim rollari</span>
+                                    </a>
+                                </li>
+                                <li data-menu="" {% if request.path == '/main/hemis_role' %}class="active"{% endif %}>
+                                    <a class="dropdown-item d-flex align-items-center"
+                                       href="{% url 'hemis_role' %}" data-bs-toggle="">
+                                        <i data-feather="circle"></i>
+                                        <span>HEMIS rollari</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
             </ul>
         </div>
     </div>

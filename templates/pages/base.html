@@ -18,10 +18,7 @@
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/css/vendors.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/js/forms/validation/jquery.validate.min.js' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/js/ui/jquery.sticky.js' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/css/forms/select/select2.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/js/forms/select/select2.full.min.js' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/css/charts/apexcharts.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/css/extensions/toastr.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css' %}">
@@ -92,7 +89,7 @@
 
 <!-- BEGIN: Vendor JS-->
 <script src="{% static 'assets/vendors/js/vendors.min.js' %}"></script>
- 
+<script src="{% static 'assets/vendors/js/forms/select/select2.full.min.js' %}"></script>
 <!-- BEGIN Vendor JS-->
 
 <!-- BEGIN: Page Vendor JS-->
@@ -109,6 +106,7 @@
 <!-- END: Theme JS-->
 
 <!-- BEGIN: Page JS-->
+    <script src="{% static 'assets/js/scripts/forms/form-select2.min.js' %}"></script>
 <!-- END: Page JS-->
 
 {% block script %}

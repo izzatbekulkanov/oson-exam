@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
+from main.models import NetworkDevice
+
 
 # Create your views here.
 
@@ -11,7 +13,9 @@ def employee_dashboard(request):
 
 
 def dashboard(request):
-    return render(request, 'landing/content.html')
+    tasdiqlangan_devices = NetworkDevice.objects.filter(status='Tasdiqlangan')
+    context = {'tasdiqlangan_devices': tasdiqlangan_devices}
+    return render(request, 'landing/content.html', context)
 
 
 @login_required
