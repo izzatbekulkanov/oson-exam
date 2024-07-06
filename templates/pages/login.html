@@ -136,13 +136,24 @@
                                 <div class="divider-text">Yoki</div>
                             </div>
                             <div class="auth-footer-btn d-flex justify-content-center">
-                                <a class="btn btn-facebook " href="#">
-                                    <i data-feather="facebook"></i>
+                                <a class="btn btn-facebook " data-bs-toggle="collapse" href="#collapseExample"  role="button" aria-expanded="true" aria-controls="collapseExample">
+                                    HEMIS
                                 </a>
                                 <a class="btn btn-twitter white" href="#">
-                                    <i data-feather="twitter"></i>
+                                    ONEID
                                 </a>
+                                
                             </div>
+                            <div class="collapse" id="collapseExample" style="">
+                                        <div class="d-flex p-1 m-0 justify-content-center">
+                                            <a class="custom-option-item text-center p-1 border mx-2 rounded shadow-sm bg-primary" href="{% url 'oauth_authorize' %}">
+                                                <span class="custom-option-item-title h4 d-block text-white">Hodim</span>
+                                            </a>
+                                            <a class="custom-option-item text-center p-1 border mx-2 rounded shadow-sm bg-primary" href="{% url 'student_oauth_authorize' %}">
+                                                <span class="custom-option-item-title h4 d-block text-white">Talaba</span>
+                                            </a>
+                                        </div>
+                                    
                         </div>
                     </div>
                     <!-- /Login-->

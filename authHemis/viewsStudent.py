@@ -13,9 +13,9 @@ from account.models import CustomUser, Roles, Gender, StudentStatus, PaymentForm
 from university.models import Specialty, EducationForm, EducationType, Department, EducationLang, Level, Semester, \
     GroupUniver, Curriculum, EducationYear
 
-CLIENT_ID = '5'
-CLIENT_SECRET = "lOmFaW1ja-tiD_TOAWlNiujQFXou-17gQG3GfHUK"
-REDIRECT_URI = "http://127.0.0.1:8000/hemis/callback/student"
+CLIENT_ID = '4'
+CLIENT_SECRET = "sRfOvhFep_KA_IyvYIcGEfzzHqUcz4KfqYKMF7wB"
+REDIRECT_URI = "https://webtest.namspi.uz/hemis/callback/student"
 AUTHORIZE_URL = 'https://student.namspi.uz/oauth/authorize'
 TOKEN_URL = 'https://student.namspi.uz/oauth/access-token'
 RESOURCE_OWNER_URL = 'https://student.namspi.uz/oauth/api/user?fields=id,uuid,type,name,login,picture,email,university_id,phone'
@@ -357,7 +357,7 @@ class OAuthCallbackStudentView(APIView):
                 oauth_login(request, email, user)  # Faydalanuvchini login qiling
 
             # return Response(full_info, status=status.HTTP_200_OK)
-            return redirect('index')
+            return redirect('dashboard')
         else:
             return Response(
                 {

@@ -3,10 +3,6 @@ import json
 import requests
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view
-
-import university
-from account.models import CustomUser
 from university.models import University, EducationType, Specialty, Department, EducationForm, Curriculum, \
     EducationLang, GroupUniver
 from university.serializers import UniversitySerializer, SpecialtySerializer, CurriculumSerializer, \
@@ -91,6 +87,7 @@ def save_university_from_api(request):
 
 
 def save_departments_from_api(request):
+    print('adsadsad')
     try:
         # University modelinde is_active alanı True olan bir nesneyi alın
         university = University.objects.get(is_active=True)
@@ -313,74 +310,40 @@ def save_group_from_api(request):
 
 
 def get_universities_data(request):
-    specialties = Specialty.objects.all()
-    specialties_count = specialties.count()
-
-    universities = University.objects.all()
-    universities_count = universities.count()
-
-    curriculums = Curriculum.objects.all()
-    curriculums_count = curriculums.count()
-
-    departments = Department.objects.all()
-    departments_count = departments.count()
-
-    groups = GroupUniver.objects.all()
-    groups_count = groups.count()
-
+    search_query = request.GET.get('search', '')
+    universities = University.objects.filter(name__icontains=search_query) if search_query else University.objects.all()
     university_serializer = UniversitySerializer(universities, many=True)
-    department_serializer = DepartmentSerializer(departments, many=True)
-    specialty_serializer = SpecialtySerializer(specialties, many=True)
-    curriculum_serializer = CurriculumSerializer(curriculums, many=True)
+    return JsonResponse(university_serializer.data, safe=False)
+
+def get_academic_groups_data(request):
+    search_query = request.GET.get('search', '')
+    groups = GroupUniver.objects.filter(name__icontains=search_query).order_by('name') if search_query else GroupUniver.objects.all().order_by('name')
     group_serializer = GroupUniverSerializer(groups, many=True)
+    return JsonResponse(group_serializer.data, safe=False)
 
-    data = {
-        'universities': university_serializer.data,
-        'count': universities_count,
-        'departments': department_serializer.data,
-        'departments_count': departments_count,
-        'specialties': specialty_serializer.data,
-        'specialties_count': specialties_count,
-        'curriculums': curriculum_serializer.data,
-        'curriculums_count': curriculums_count,
-        'groups': group_serializer.data,
-        'groups_count': groups_count
-    }
+def get_departments_data(request):
+    search_query = request.GET.get('search', '')
+    departments = Department.objects.filter(name__icontains=search_query) if search_query else Department.objects.all()
+    department_serializer = DepartmentSerializer(departments, many=True)
+    return JsonResponse(department_serializer.data, safe=False)
 
-    return JsonResponse(data, safe=False)
+def get_specialties_data(request):
+    search_query = request.GET.get('search', '')
+    specialties = Specialty.objects.filter(name__icontains=search_query) if search_query else Specialty.objects.all()
+    specialty_serializer = SpecialtySerializer(specialties, many=True)
+    return JsonResponse(specialty_serializer.data, safe=False)
+
+def get_curriculums_data(request):
+    search_query = request.GET.get('search', '')
+    curriculums = Curriculum.objects.filter(name__icontains=search_query) if search_query else Curriculum.objects.all()
+    curriculum_serializer = CurriculumSerializer(curriculums, many=True)
+    return JsonResponse(curriculum_serializer.data, safe=False)
 
 
-def get_universities_token_data(request):
-    universities = University.objects.exclude(api_token__isnull=True).exclude(
-        api_token__exact='')  # Faqat api_token mavjud bo'lgan universitetlarni olish
-    universities_data = []
-
-    def format_datetime(datetime_obj):
-        # return datetime_obj.strftime("%Y-%m-%d %H:%M:%S")
-        return datetime_obj.strftime("%Y-%m-%d")
-
-    for university in universities:
-        university_dict = {
-            'code': university.code,
-            'name': university.name,
-            'api_url': university.api_url,
-            'student_url': university.student_url,
-            'employee_url': university.employee_url,
-            'is_active': university.is_active,
-            'created_at': format_datetime(university.created_at),
-            'updated_at': format_datetime(university.updated_at)
-        }
-        try:
-            token_dict = json.loads(university.api_token)
-            university_dict['api_token'] = token_dict
-        except json.JSONDecodeError:
-            # Agar api_token JSON formatda emas bo'lsa, uni asl qiymati qo'shamiz
-            university_dict['api_token'] = university.api_token
-
-        universities_data.append(university_dict)
-
-    return JsonResponse({'universities': universities_data})
-
+def get_universities_with_api_token(request):
+    universities_with_token = University.objects.exclude(api_token__isnull=True).exclude(api_token='').order_by('name')
+    university_serializer = UniversitySerializer(universities_with_token, many=True)
+    return JsonResponse(university_serializer.data, safe=False)
 
 def update_api_token_view(request):
     if request.method == 'POST':
@@ -420,10 +383,17 @@ def update_university_status(request):
         is_active = request.POST.get('is_active')
 
         try:
+            universities = University.objects.exclude(code=university_code)  # Exclude the current university
+            for university in universities:
+                university.is_active = False
+                university.save()
+
+            # Now update the specific university
             university = University.objects.get(code=university_code)
-            university.is_active = is_active == 'true'  # Convert to boolean
+            university.is_active = True if is_active == 'true' else False  # Convert to boolean
             university.save()
-            return JsonResponse({'message': 'University status updated successfully.'})
+
+            return JsonResponse({'message': 'University statuses updated successfully.'})
         except University.DoesNotExist:
             return JsonResponse({'error': 'University not found.'}, status=404)
     else:

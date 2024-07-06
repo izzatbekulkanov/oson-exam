@@ -13,6 +13,7 @@ from .models import University, Department, Specialty, GroupUniver, EducationLan
 @admin.register(University)
 class UniversityAdmin(admin.ModelAdmin):
     list_display = ('name', 'code', 'api_url', 'student_url', 'employee_url', 'api_token_display')
+    search_fields = ('name', 'code')  # Search maydoni
 
     def api_token_display(self, obj):
         if obj.api_token is not None:
@@ -26,6 +27,17 @@ class UniversityAdmin(admin.ModelAdmin):
             return None
 
     api_token_display.short_description = 'API Token JSON'
+
+    # Filterlar qo'shish
+    list_filter = ('is_active', 'created_at')  # is_active va yaratilgan sanasi bo'yicha filter
+
+    # Boshqa kerakli qo'shimchalar, masalan, ordering yoki readonly_fields
+
+    # Misol:
+    ordering = ('-created_at',)  # Yaratilgan sanasi bo'yicha tartiblash
+    readonly_fields = ('created_at', 'updated_at')  # Faqat o'qish mumkin bo'lgan maydonlar
+
+    # Bu yerda boshqa o'zgaruvchilarni ham qo'shishingiz mumkin
 # Department
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):

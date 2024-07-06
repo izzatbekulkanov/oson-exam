@@ -21,3 +21,7 @@ def dashboard(request):
 @login_required
 def api_key(request):
     return render(request, 'pages/HEMIS/api_key.html')
+
+@login_required
+def data_hemis(request):
+    return render(request, 'pages/HEMIS/data_hemis.html')

@@ -17,17 +17,6 @@ def group_list(request):
     return JsonResponse(group_data, safe=False)
 
 
-def create_group(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        if name:
-            group = Group.objects.create(name=name)
-            return JsonResponse({'success': 'Group created successfully', 'id': group.id})
-        else:
-            return JsonResponse({'error': 'Name field is required'}, status=400)
-    else:
-        return JsonResponse({'error': 'Only POST method is allowed'}, status=405)
-
 
 def create_default_groups(request):
     # Grouplarni nomlari
@@ -43,33 +32,3 @@ def create_default_groups(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-
-@login_required
-def get_user_groups(request):
-    user = request.user
-    groups = user.groups.all()
-
-    # Serialize the groups
-    groups_list = [{'id': group.id, 'name': group.name} for group in groups]
-
-    return JsonResponse({'groups': groups_list, 'now_role': user.now_role})
-
-
-@require_POST
-@login_required
-def set_now_role(request):
-    try:
-        data = json.loads(request.body)
-        group_name = data.get('now_role')
-
-        if group_name:
-            # Assuming you have a CustomUser model with a field named now_role
-            request.user.now_role = group_name
-            request.user.save()
-
-            return JsonResponse({'status': 'success'})
-
-    except json.JSONDecodeError:
-        return HttpResponseBadRequest('Invalid JSON data')
-
-    return HttpResponseBadRequest('Bad request')

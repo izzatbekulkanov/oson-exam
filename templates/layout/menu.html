@@ -115,8 +115,8 @@
                                 <span>API Key</span>
                             </a>
                         </li>
-                        <li data-menu="">
-                            <a class="dropdown-item d-flex align-items-center" href="ui-feather.html" data-bs-toggle="">
+                        <li data-menu="" {% if request.path == '/data_hemis' %}class="active"{% endif %}>
+                            <a class="dropdown-item d-flex align-items-center" href="{% url 'data_hemis' %}" data-bs-toggle="">
                                 <i data-feather='columns'></i>
                                 <span>Ma'lumotlar</span>
                             </a>

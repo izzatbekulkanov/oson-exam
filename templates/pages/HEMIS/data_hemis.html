@@ -1,0 +1,876 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+{% block style %}
+        
+{% endblock style %}
+{% block content %}
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-header row"></div>
+            <div class="content-body">
+                <section id="faq-search-filter">
+                <div class="card faq-search"
+                     style="background-image: url('{% static 'assets/images/banner/banner.png' %}')">
+                    <div class="card-body text-center" id="header-loader-div">
+                        <!-- main title -->
+                        <h2 class="text-primary">Keling, ba'zi savollarga javob beraylik</h2>
+
+                        <!-- subtitle -->
+                        <p class="card-text mb-2">Yangilanishi kerakli bo'lgan tugmani bosing</p>
+
+                        <!-- search input -->
+                        <form class="faq-search-input">
+                            <div class="input-group input-group-merge">
+                                <div class="btn-group w-100" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-gradient-primary waves-effect waves-float waves-light" onclick="sendRequest('save_university_from_api')">Universitet</button>
+                                    <button type="button" class="btn btn-gradient-info waves-effect waves-float waves-light" onclick="sendRequest('save_departments_from_api')">Bo'limlar</button>
+                                    <button type="button" class="btn btn-gradient-success waves-effect waves-float waves-light" onclick="sendRequest('save_specialty_from_api')">Yo'nalish</button>
+                                    <button type="button" class="btn btn-gradient-warning waves-effect waves-float waves-light" onclick="sendRequest('save_curriculum_from_api')">O'quv re'ja</button>
+                                    <button type="button" class="btn btn-gradient-primary waves-effect waves-float waves-light" onclick="sendRequest('save_group_from_api')">Akademik guruhlar</button>
+                                    <button type="button" class="btn btn-gradient-secondary waves-effect waves-float waves-light" onclick="sendRequest('save_subjects_from_api')">Fanlar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+                <!-- /search header -->
+    
+                <!-- frequently asked questions tabs pills -->
+                <section id="faq-tabs">
+                    <!-- vertical tab pill -->
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="faq-navigation d-flex justify-content-between flex-column mb-2 mb-md-0">
+                                <!-- pill tabs navigation -->
+                                <ul class="nav nav-pills nav-left flex-column" role="tablist">
+                                    <!-- payment -->
+                                    <li class="nav-item">
+                                        <a
+                                                class="nav-link active"
+                                                id="educations"
+                                                data-bs-toggle="pill"
+                                                href="#faq-educations"
+                                                aria-expanded="true"
+                                                role="tab">
+                                            
+                                            <i data-feather='book-open' class="font-medium-3 me-1"></i>
+                                            <span class="fw-bold">Oliygohlar</span>
+                                        </a>
+                                    </li>
+    
+                                    <!-- delivery -->
+                                    <li class="nav-item">
+                                        <a
+                                                class="nav-link"
+                                                id="department"
+                                                data-bs-toggle="pill"
+                                                href="#faq-department"
+                                                aria-expanded="false"
+                                                role="tab">
+                                            <i data-feather="grid" class="font-medium-3 me-1"></i>
+                                            <span class="fw-bold">Bo'limlar</span>
+                                        </a>
+                                    </li>
+    
+                                    <!-- cancellation and return -->
+                                    <li class="nav-item">
+                                        <a
+                                                class="nav-link"
+                                                id="specialty"
+                                                data-bs-toggle="pill"
+                                                href="#faq-specialty"
+                                                aria-expanded="false"
+                                                role="tab">
+                                            <i data-feather="git-branch" class="font-medium-3 me-1"></i>
+                                            <span class="fw-bold">Yo'nalishlar</span>
+                                        </a>
+                                    </li>
+    
+                                    <!-- my order -->
+                                    <li class="nav-item">
+                                        <a
+                                                class="nav-link"
+                                                id="my-order"
+                                                data-bs-toggle="pill"
+                                                href="#faq-my-order"
+                                                aria-expanded="false"
+                                                role="tab">
+                                            <i data-feather="package" class="font-medium-3 me-1"></i>
+                                            <span class="fw-bold">O'quv rejalar</span>
+                                        </a>
+                                    </li>
+    
+                                    <!-- product and services-->
+                                    <li class="nav-item">
+                                        <a
+                                                class="nav-link"
+                                                id="academic-group"
+                                                data-bs-toggle="pill"
+                                                href="#faq-academic-group"
+                                                aria-expanded="false"
+                                                role="tab">
+                                            <i data-feather="users" class="font-medium-3 me-1"></i>
+                                            <span class="fw-bold">Akademik guruhlar</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="subjects" data-bs-toggle="pill" href="#faq-subjects" aria-expanded="false" role="tab">
+                                            <i data-feather="file-text" class="font-medium-3 me-1"></i>
+                                            <span class="fw-bold">Fanlar</span>
+                                        </a>
+                                    </li>
+                                </ul>
+    
+                                <!-- FAQ image -->
+                                <img
+                                        src="{% static 'assets/images/illustration/faq-illustrations.svg' %}"
+                                        class="img-fluid d-none d-md-block"
+                                        alt="demand img"/>
+                            </div>
+                        </div>
+    
+                        <div class="col-lg-9 col-md-8 col-sm-12">
+                            <!-- pill tabs tab content -->
+                            <div class="tab-content">
+                                <!-- Universitetlar ro'yhati -->
+                                <div role="tabpanel" class="tab-pane active" id="faq-educations" aria-labelledby="educations"
+                                     aria-expanded="true">
+                                    <!-- icon and header -->
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-tag bg-light-primary me-1">
+                                            <i data-feather='book-open' class="font-medium-4"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-0">Oliygohlar</h4>
+                                            <span>Barcha Oliyhohlar ro'yhati?</span>
+                                        </div>
+                                    </div>
+    
+                                    <!-- frequent answer and question  collapse  -->
+                                    <div class="accordion accordion-margin mt-2" id="faq-payment-qna">
+                                        <div class="card accordion-item">
+                                            <h2 class="accordion-header" id="paymentOne">
+                                                <button
+                                                        class="accordion-button collapsed"
+                                                        data-bs-toggle="collapse"
+                                                        role="button"
+                                                        data-bs-target="#faq-payment-one"
+                                                        aria-expanded="false"
+                                                        aria-controls="faq-payment-one"
+                                                >
+                                                    Jadvalda
+                                                </button>
+                                            </h2>
+    
+                                            <div id="faq-payment-one"
+                                                    class="collapse accordion-collapse"
+                                                    aria-labelledby="paymentOne"
+                                                    data-bs-parent="#faq-payment-qna">
+                                                <div class="accordion-body">
+                                                    <div class="row" id="table-bordered">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-header">
+                                                                    <div class="input-group">
+                                                                        <input type="text" class="form-control" id="search-university-input" placeholder="Qidirish uchun universitetga tegishli bo'lgan ma'lumot kiriting..." aria-describedby="button-search-univer">
+                                                                        <button class="btn btn-outline-primary waves-effect" id="button-search-university" type="button">Qidirish</button>
+                                                                    </div>
+                                                                </div>
+                                                             
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-bordered" id="table-universities">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>TR</th>
+                                                                                <th>Oliygoh nomi</th>
+                                                                                <th>Kodi</th>
+                                                                                <th>Hemis URL</th>
+                                                                                <th>Student URL</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card accordion-item">
+                                            <h2 class="accordion-header" id="paymentTwo">
+                                                <button
+                                                        class="accordion-button"
+                                                        data-bs-toggle="collapse"
+                                                        role="button"
+                                                        data-bs-target="#faq-payment-two"
+                                                        aria-expanded="true"
+                                                        aria-controls="faq-payment-two">
+                                                    Statistika
+                                                </button>
+                                            </h2>
+                                            <div
+                                                    id="faq-payment-two"
+                                                    class="collapse show"
+                                                    aria-labelledby="paymentTwo"
+                                                    data-bs-parent="#faq-payment-qna">
+                                                <div class="accordion-body">
+                                                    Sweet pie candy jelly. Sesame snaps biscuit sugar plum. Sweet roll
+                                                    topping fruitcake. Caramels
+                                                    liquorice biscuit ice cream fruitcake cotton candy tart. Donut caramels
+                                                    gingerbread jelly-o
+                                                    gingerbread pudding. Gummi bears pastry marshmallow candy canes pie. Pie
+                                                    apple pie carrot cake.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <!-- Bo'limlar -->
+                                <div class="tab-pane" id="faq-department" role="tabpanel" aria-labelledby="department"
+                                     aria-expanded="false">
+                                    <!-- icon and header -->
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-tag bg-light-primary me-1">
+                                            <i data-feather="grid" class="font-medium-4"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-0">Bo'limlar</h4>
+                                            <span>Which license do I need?</span>
+                                        </div>
+                                    </div>
+    
+                                    <!-- frequent answer and question  collapse  -->
+                                    <div class="accordion accordion-margin mt-2" id="faq-delivery-qna">
+                                        <div class="card accordion-item">
+                                            <h2 class="accordion-header" id="deliveryOne">
+                                                <button
+                                                        class="accordion-button collapsed"
+                                                        data-bs-toggle="collapse"
+                                                        role="button"
+                                                        data-bs-target="#faq-delivery-one"
+                                                        aria-expanded="false"
+                                                        aria-controls="faq-delivery-one">
+                                                    Jadvalda
+                                                </button>
+                                            </h2>
+    
+                                            <div
+                                                    id="faq-delivery-one"
+                                                    class="collapse accordion-collapse"
+                                                    aria-labelledby="deliveryOne"
+                                                    data-bs-parent="#faq-delivery-qna">
+                                                <div class="accordion-body">
+                                                   <div class="row" id="table-bordered">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-header">
+                                                                    <div class="input-group">
+                                                                        <input type="text" class="form-control" id="search-department-input" placeholder="Qidirish uchun Bo'limlarga tegishli bo'lgan ma'lumot kiriting..." aria-describedby="button-search-department">
+                                                                        <button class="btn btn-outline-primary waves-effect" id="button-search-department" type="button">Qidirish</button>
+                                                                    </div>
+                                                                </div>
+                                                             
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-bordered" id="table-department">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>TR</th>
+                                                                                <th>Bo'lim nomi</th>
+                                                                                <th>Code ID</th>
+                                                                                <th>Boshqa fakultet</th>
+                                                                                <th>Holati</th>
+                                                                                <th>Struktura turi</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card accordion-item">
+                                            <h2 class="accordion-header" id="deliveryTwo">
+                                                <button
+                                                        class="accordion-button collapsed"
+                                                        data-bs-toggle="collapse"
+                                                        role="button"
+                                                        data-bs-target="#faq-delivery-two"
+                                                        aria-expanded="false"
+                                                        aria-controls="faq-delivery-two">
+                                                    Statistika
+                                                </button>
+                                            </h2>
+                                            <div
+                                                    id="faq-delivery-two"
+                                                    class="collapse accordion-collapse"
+                                                    aria-labelledby="deliveryTwo"
+                                                    data-bs-parent="#faq-delivery-qna">
+                                                <div class="accordion-body">
+                                                    Sweet pie candy jelly. Sesame snaps biscuit sugar plum. Sweet roll
+                                                    topping fruitcake. Caramels
+                                                    liquorice biscuit ice cream fruitcake cotton candy tart. Donut caramels
+                                                    gingerbread jelly-o
+                                                    gingerbread pudding. Gummi bears pastry marshmallow candy canes pie. Pie
+                                                    apple pie carrot cake.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <!-- Yo'nalishlar  -->
+                                <div
+                                        class="tab-pane"
+                                        id="faq-specialty"
+                                        role="tabpanel"
+                                        aria-labelledby="specialty"
+                                        aria-expanded="false">
+                                    <!-- icon and header -->
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-tag bg-light-primary me-1">
+                                            <i data-feather="git-branch" class="font-medium-4"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-0">Yo'nalishlar</h4>
+                                            <span>Which license do I need?</span>
+                                        </div>
+                                    </div>
+    
+                                    <!-- frequent answer and question  collapse  -->
+                                    <div class="accordion accordion-margin mt-2" id="faq-cancellation-qna">
+                                        <div class="card accordion-item">
+                                            <h2 class="accordion-header" id="cancellationOne">
+                                                <button
+                                                        class="accordion-button collapsed"
+                                                        data-bs-toggle="collapse"
+                                                        role="button"
+                                                        data-bs-target="#faq-cancellation-one"
+                                                        aria-expanded="false"
+                                                        aria-controls="faq-cancellation-one">
+                                                    Jadvalda
+                                                </button>
+                                            </h2>
+    
+                                            <div
+                                                    id="faq-cancellation-one"
+                                                    class="collapse"
+                                                    aria-labelledby="cancellationOne"
+                                                    data-bs-parent="#faq-cancellation-qna">
+                                                <div class="accordion-body">
+                                                   <div class="row" id="table-bordered">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-header">
+                                                                    <div class="input-group">
+                                                                        <input type="text" class="form-control" id="search-specialty-input" placeholder="Qidirish uchun Bo'limlarga tegishli bo'lgan ma'lumot kiriting..." aria-describedby="button-search-specialty">
+                                                                        <button class="btn btn-outline-primary waves-effect" id="button-search-specialty" type="button">Qidirish</button>
+                                                                    </div>
+                                                                </div>
+                                                             
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-bordered" id="table-specialty">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>TR</th>
+                                                                                <th>Bo'lim nomi</th>
+                                                                                <th>Code ID</th>
+                                                                                <th>Fakultet</th>
+                                                                                <th>Ta'lim turi</th>
+                                                                                
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card accordion-item">
+                                            <h2 class="accordion-header" id="cancellationTwo">
+                                                <button
+                                                        class="accordion-button collapsed"
+                                                        data-bs-toggle="collapse"
+                                                        role="button"
+                                                        data-bs-target="#faq-cancellation-two"
+                                                        aria-expanded="false"
+                                                        aria-controls="faq-cancellation-two">
+                                                    Statistika
+                                                </button>
+                                            </h2>
+                                            <div
+                                                    id="faq-cancellation-two"
+                                                    class="collapse"
+                                                    aria-labelledby="cancellationTwo"
+                                                    data-bs-parent="#faq-cancellation-qna">
+                                                <div class="accordion-body">
+                                                    Sweet pie candy jelly. Sesame snaps biscuit sugar plum. Sweet roll
+                                                    topping fruitcake. Caramels
+                                                    liquorice biscuit ice cream fruitcake cotton candy tart. Donut caramels
+                                                    gingerbread jelly-o
+                                                    gingerbread pudding. Gummi bears pastry marshmallow candy canes pie. Pie
+                                                    apple pie carrot cake.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <!-- Oquv rejalar -->
+                                <div class="tab-pane" id="faq-my-order" role="tabpanel" aria-labelledby="my-order"
+                                     aria-expanded="false">
+                                    <!-- icon and header -->
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-tag bg-light-primary me-1">
+                                            <i data-feather="package" class="font-medium-4"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-0">O'quv rejalar</h4>
+                                            <span>Which license do I need?</span>
+                                        </div>
+                                    </div>
+    
+                                    <!-- frequent answer and question  collapse  -->
+                                    <div class="accordion accordion-margin mt-2" id="faq-my-order-qna">
+                                        <div class="card accordion-item">
+                                            <h2 class="accordion-header" id="myOrderOne">
+                                                <button
+                                                        class="accordion-button collapsed"
+                                                        data-bs-toggle="collapse"
+                                                        role="button"
+                                                        data-bs-target="#faq-my-order-one"
+                                                        aria-expanded="false"
+                                                        aria-controls="faq-my-order-one">
+                                                    Jadvalda
+                                                </button>
+                                            </h2>
+    
+                                            <div
+                                                    id="faq-my-order-one"
+                                                    class="collapse accordion-collapse"
+                                                    aria-labelledby="myOrderOne"
+                                                    data-bs-parent="#faq-my-order-qna">
+                                                <div class="accordion-body">
+                                                    <div class="row" id="table-bordered">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-header">
+                                                                    <div class="input-group">
+                                                                        <input type="text" class="form-control" id="search-curriculum-input" placeholder="Qidirish uchun o'quv rejaga tegishli bo'lgan ma'lumot kiriting..." aria-describedby="button-search-curriculum">
+                                                                        <button class="btn btn-outline-primary waves-effect" id="button-search-curriculum" type="button">Qidirish</button>
+                                                                    </div>
+                                                                </div>
+                                                             
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-bordered" id="table-curriculum">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>TR</th>
+                                                                                <th>O'quv reja nomi</th>
+                                                                                <th>Yo'nalish nomi</th>
+                                                                                <th>Ta'lim turi</th>
+                                                                                <th>Ta'lim shakli</th>
+                                                                                <th>Ta'lim davri</th>
+                                                               
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card accordion-item">
+                                            <h2 class="accordion-header" id="myOrderTwo">
+                                                <button
+                                                        class="accordion-button collapsed"
+                                                        data-bs-toggle="collapse"
+                                                        role="button"
+                                                        data-bs-target="#faq-my-order-two"
+                                                        aria-expanded="false"
+                                                        aria-controls="faq-my-order-two"
+                                                >
+                                                    Statistika
+                                                </button>
+                                            </h2>
+                                            <div
+                                                    id="faq-my-order-two"
+                                                    class="collapse accordion-collapse"
+                                                    aria-labelledby="myOrderTwo"
+                                                    data-bs-parent="#faq-my-order-qna"
+                                            >
+                                                <div class="accordion-body">
+                                                    Sweet pie candy jelly. Sesame snaps biscuit sugar plum. Sweet roll
+                                                    topping fruitcake. Caramels
+                                                    liquorice biscuit ice cream fruitcake cotton candy tart. Donut caramels
+                                                    gingerbread jelly-o
+                                                    gingerbread pudding. Gummi bears pastry marshmallow candy canes pie. Pie
+                                                    apple pie carrot cake.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <!-- Akademik guruhlar -->
+                                <div
+                                        class="tab-pane"
+                                        id="faq-academic-group"
+                                        role="tabpanel"
+                                        aria-labelledby="academic-group"
+                                        aria-expanded="false">
+                                    <!-- icon and header -->
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-tag bg-light-primary me-1">
+                                            <i data-feather="users" class="font-medium-4"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-0">Akademik guruhlar</h4>
+                                            <span>Which license do I need?</span>
+                                        </div>
+                                    </div>
+    
+                                    <!-- frequent answer and question  collapse  -->
+                                    <div class="accordion accordion-margin mt-2" id="faq-product-qna">
+                                        <div class="card accordion-item">
+                                            <h2 class="accordion-header" id="productOne">
+                                                <button
+                                                        class="accordion-button collapsed"
+                                                        data-bs-toggle="collapse"
+                                                        role="button"
+                                                        data-bs-target="#faq-product-one"
+                                                        aria-expanded="false"
+                                                        aria-controls="faq-product-one">
+                                                    Jadvalda
+                                                </button>
+                                            </h2>
+    
+                                            <div
+                                                    id="faq-product-one"
+                                                    class="collapse accordion-collapse"
+                                                    aria-labelledby="productOne"
+                                                    data-bs-parent="#faq-product-qna">
+                                                <div class="accordion-body">
+                                                    <div class="row" id="table-bordered">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-header">
+                                                                    <div class="input-group">
+                                                                        <input type="text" class="form-control" id="search-academic-group-input" placeholder="Qidirish uchun akademik guruhga tegishli bo'lgan ma'lumot kiriting..." aria-describedby="button-search-academic-group">
+                                                                        <button class="btn btn-outline-primary waves-effect" id="button-search-academic-group" type="button">Qidirish</button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-bordered" id="table-academic-group">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>TR</th>
+                                                                                <th>Akademik guruh nomi</th>
+                                                                                <th>Bo'lim nomi</th>
+                                                                                <th>Yo'nalish turi</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card accordion-item">
+                                            <h2 class="accordion-header" id="productTwo">
+                                                <button
+                                                        class="accordion-button collapsed"
+                                                        data-bs-toggle="collapse"
+                                                        role="button"
+                                                        data-bs-target="#faq-product-two"
+                                                        aria-expanded="false"
+                                                        aria-controls="faq-product-two">
+                                                    Statistika
+                                                </button>
+                                            </h2>
+                                            <div
+                                                    id="faq-product-two"
+                                                    class="collapse accordion-collapse"
+                                                    aria-labelledby="productTwo"
+                                                    data-bs-parent="#faq-product-qna">
+                                                <div class="accordion-body">
+                                                    Sweet pie candy jelly. Sesame snaps biscuit sugar plum. Sweet roll
+                                                    topping fruitcake. Caramels
+                                                    liquorice biscuit ice cream fruitcake cotton candy tart. Donut caramels
+                                                    gingerbread jelly-o
+                                                    gingerbread pudding. Gummi bears pastry marshmallow candy canes pie. Pie
+                                                    apple pie carrot cake.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Fanlar guruhlar -->
+                                <div
+                                        class="tab-pane"
+                                        id="faq-subjects"
+                                        role="tabpanel"
+                                        aria-labelledby="subjects"
+                                        aria-expanded="false"
+                                >
+                                    <!-- icon and header -->
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar avatar-tag bg-light-primary me-1">
+                                            <i data-feather="file-text" class="font-medium-4"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="mb-0">Akademik guruhlar</h4>
+                                            <span>Which license do I need?</span>
+                                        </div>
+                                    </div>
+    
+                                    <!-- frequent answer and question  collapse  -->
+                                    <div class="accordion accordion-margin mt-2" id="faq-product-qna">
+                                        <div class="card accordion-item">
+                                            <h2 class="accordion-header" id="productOne">
+                                                <button
+                                                        class="accordion-button collapsed"
+                                                        data-bs-toggle="collapse"
+                                                        role="button"
+                                                        data-bs-target="#faq-product-one"
+                                                        aria-expanded="false"
+                                                        aria-controls="faq-product-one">
+                                                   Jadvalda
+                                                </button>
+                                            </h2>
+    
+                                            <div
+                                                    id="faq-product-one"
+                                                    class="collapse accordion-collapse"
+                                                    aria-labelledby="productOne"
+                                                    data-bs-parent="#faq-product-qna">
+                                                <div class="accordion-body">
+                                                    Pastry pudding cookie toffee bonbon jujubes jujubes powder topping.
+                                                    Jelly beans gummi bears sweet roll
+                                                    bonbon muffin liquorice. Wafer lollipop sesame snaps. Brownie macaroon
+                                                    cookie muffin cupcake candy
+                                                    caramels tiramisu. Oat cake chocolate cake sweet jelly-o brownie biscuit
+                                                    marzipan. Jujubes donut
+                                                    marzipan chocolate bar. Jujubes sugar plum jelly beans tiramisu icing
+                                                    cheesecake.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card accordion-item">
+                                            <h2 class="accordion-header" id="productTwo">
+                                                <button
+                                                        class="accordion-button collapsed"
+                                                        data-bs-toggle="collapse"
+                                                        role="button"
+                                                        data-bs-target="#faq-product-two"
+                                                        aria-expanded="false"
+                                                        aria-controls="faq-product-two"
+                                                >
+                                                    Statistika
+                                                </button>
+                                            </h2>
+                                            <div
+                                                    id="faq-product-two"
+                                                    class="collapse accordion-collapse"
+                                                    aria-labelledby="productTwo"
+                                                    data-bs-parent="#faq-product-qna"
+                                            >
+                                                <div class="accordion-body">
+                                                    Sweet pie candy jelly. Sesame snaps biscuit sugar plum. Sweet roll
+                                                    topping fruitcake. Caramels
+                                                    liquorice biscuit ice cream fruitcake cotton candy tart. Donut caramels
+                                                    gingerbread jelly-o
+                                                    gingerbread pudding. Gummi bears pastry marshmallow candy canes pie. Pie
+                                                    apple pie carrot cake.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- / frequently asked questions tabs pills -->
+    
+                <!-- contact us -->
+                <section class="faq-contact">
+                    <div class="row mt-5 pt-75">
+                        <div class="col-12 text-center">
+                            <h2>Sizda hali ham savol bor?</h2>
+                            <p class="mb-3">
+                               Tez-tez so'raladigan savollar bo'limida savol topa olmasangiz, har doim biz bilan bog'lanishingiz mumkin. Biz sizga javob beramiz
+                                qisqa vaqt ichida!
+                            </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card text-center faq-contact-card shadow-none py-1">
+                                <div class="accordion-body">
+                                    <div class="avatar avatar-tag bg-light-primary mb-2 mx-auto">
+                                        <i data-feather="phone-call" class="font-medium-3"></i>
+                                    </div>
+                                    <h4>+ (998) 94 704 00 10</h4>
+                                    <span class="text-body">Biz har doim yordam berishdan xursandmiz!</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card text-center faq-contact-card shadow-none py-1">
+                                <div class="accordion-body">
+                                    <div class="avatar avatar-tag bg-light-primary mb-2 mx-auto">
+                                        <i data-feather="mail" class="font-medium-3"></i>
+                                    </div>
+                                    <h4>izzatbekulkanov@gmail.com</h4>
+                                    <span class="text-body">Tezroq javob olishning eng yaxshi usuli!</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--/ contact us -->
+
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}
+
+{% block script %}
+<!-- BEGIN: Page JS-->
+    <script>
+    function sendRequest(endpoint) {
+            $('#header-loader-div').block({
+                   message: '<h1 class="text text-body-heading text-primary mt-3">Yangilanmoqda...</h1>',
+                    css: {
+                        border: 'none',
+                        padding: '15px',
+                        backgroundColor: 'transparent',
+                        '-webkit-border-radius': '10px',
+                        '-moz-border-radius': '10px',
+                        opacity: .5,
+                        color: '#fff'
+                    },
+                    baseZ: 1500,
+                    overlayCSS: {
+                        backgroundColor: '#FFFFFF',
+                        opacity: 0.7,
+                        cursor: 'wait'
+                      }
+                });
+            $.ajax({
+                url: '/edu/'+endpoint,  // Dynamic URL generation based on endpoint
+                type: 'GET',  // Or 'POST' depending on your API endpoint requirements
+                success: function(response) {
+                    $('#header-loader-div').unblock();
+                    console.log('Request sent successfully:', response);
+                    // Handle success response as needed
+                },
+                error: function(xhr, status, error) {
+                    $('#header-loader-div').unblock();
+                    console.error('Error sending request:', error);
+                    // Handle error case
+                }
+            });
+        }
+    </script>
+        
+    <!-- Universitet ma'lumotlarini jadvalga chiqarish va qidirish-->
+    <script>
+$(document).ready(function() {
+    function fetchData(endpoint, tableSelector, fields, query = '') {
+        $.ajax({
+            url: endpoint,
+            type: 'GET',
+            data: { search: query },
+            success: function(response) {
+                renderTable(tableSelector, response, fields);
+            },
+            error: function(xhr, status, error) {
+                alert('Ma\'lumotlarni olishda xatolik yuz berdi: ' + error);
+            }
+        });
+    }
+
+    function renderTable(tableSelector, data, fields) {
+        $(tableSelector).empty();
+        for (var i = 0; i < data.length; i++) {
+            var row = '<tr><td>' + (i + 1) + '</td>';
+            for (var j = 0; j < fields.length; j++) {
+                row += '<td>' + data[i][fields[j]] + '</td>';
+            }
+            row += '</tr>';
+            $(tableSelector).append(row);
+        }
+    }
+
+    // Universitetlar ma'lumotlarini olish uchun funksiyani chaqirish
+    fetchData('{% url "get_universities_data" %}', '#table-universities tbody', ['name', 'code', 'api_url', 'student_url']);
+
+    // Universitetlar qidirish tugmachasini bosganda
+    $('#button-search-university').click(function() {
+        var searchQuery = $('#search-university-input').val();
+        fetchData('{% url "get_universities_data" %}', '#table-universities tbody', ['name', 'code', 'api_url', 'student_url'], searchQuery);
+    });
+
+    // Akademik guruhlar ma'lumotlarini olish uchun funksiyani chaqirish
+    fetchData('{% url "get_academic_groups_data" %}', '#table-academic-group tbody', ['name', 'department_name', 'specialty_name']);
+
+    // Akademik guruhlar qidirish tugmachasini bosganda
+    $('#button-search-academic-group').click(function() {
+        var searchQuery = $('#search-academic-group-input').val();
+        fetchData('{% url "get_academic_groups_data" %}', '#table-academic-group tbody', ['name', 'department_name', 'specialty_name'], searchQuery);
+    });
+
+    // Bo'limlar ma'lumotlarini olish uchun funksiyani chaqirish
+    fetchData('{% url "get_departments_data" %}', '#table-department tbody', ['name', 'codeID', 'parent', 'active', 'structure_type']);
+
+    // Bo'limlar qidirish tugmachasini bosganda
+    $('#button-search-department').click(function() {
+        var searchQuery = $('#search-department-input').val();
+        fetchData('{% url "get_departments_data" %}', '#table-department tbody', ['name', 'codeID', 'parent', 'active', 'structure_type'], searchQuery);
+    });
+
+    // Yo'nalishlar ma'lumotlarini olish uchun funksiyani chaqirish
+    fetchData('{% url "get_specialties_data" %}', '#table-specialty tbody', ['name', 'codeID', 'department_name', 'education_type_name']);
+
+    // Yo'nalishlar qidirish tugmachasini bosganda
+    $('#button-search-specialty').click(function() {
+        var searchQuery = $('#search-specialty-input').val();
+        fetchData('{% url "get_specialties_data" %}', '#table-specialty tbody', ['name', 'codeID', 'department_name', 'education_type_name'], searchQuery);
+    });
+
+    // O'quv rejalar ma'lumotlarini olish uchun funksiyani chaqirish
+    fetchData('{% url "get_curriculums_data" %}', '#table-curriculum tbody', ['name', 'specialty_name', 'education_type_name', 'education_form_name', 'education_period']);
+
+    // O'quv rejalar qidirish tugmachasini bosganda
+    $('#button-search-curriculum').click(function() {
+        var searchQuery = $('#search-curriculum-input').val();
+        fetchData('{% url "get_curriculums_data" %}', '#table-curriculum tbody', ['name', 'specialty_name', 'education_type_name', 'education_form_name', 'education_period'], searchQuery);
+    });
+});
+    </script>
+        
+<!-- END: Page JS-->
+{% endblock script %}

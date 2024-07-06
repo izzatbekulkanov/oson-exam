@@ -10,27 +10,31 @@ from account.models import CustomUser, StaffPosition, EmployeeStatus, EmployeeTy
 from university.models import Department, University
 
 
-def employee_views(request):
-    return render(request, 'pages/employee/../templates2/app/users/employee-list.html')
 def employee_list_json(request):
-    hodimlar = CustomUser.objects.filter(user_type=2)
+    employees = CustomUser.objects.filter(is_employee=True)
 
     # Prepare JSON data
     data = []
-    for hodim in hodimlar:
-        hodim_data = {
-            'id': hodim.id,
-            'image': hodim.imageFile.url if hodim.imageFile else (hodim.image if hodim.image else None),
-            'full_name': hodim.full_name,
-            'phone_number': hodim.phone_number,
-            'email': hodim.email,
-            'department': hodim.department.name if hodim.department else None,
-            'user_type': hodim.staffPosition.name if hodim.staffPosition else None,
-            'status': "Active" if hodim.is_active else "Inactive",
-            'join_date': hodim.created_at.strftime('%Y-%m-%d'),
+    for employee in employees:
+        employee_data = {
+            'id': employee.id,
+            'full_name': employee.full_name,
+            'email': employee.email,
+            'phone_number': employee.phone_number,
+            'image': employee.imageFile.url if employee.imageFile else None,
+            'status': "Active" if employee.is_active else "Inactive",
+            'join_date': employee.created_at.strftime('%Y-%m-%d'),
+            'birth_date': employee.birth_date.strftime('%Y-%m-%d') if employee.birth_date else None,
+            'employee_id_number': employee.employee_id_number,
+            'user_type': employee.get_user_type_display(),
+            'hemis_role': [role.name for role in employee.hemis_role.all()],
+            'created_at': employee.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            'updated_at': employee.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
+            'last_login': employee.last_login.strftime('%Y-%m-%d %H:%M:%S'),
+            'last_activity': employee.last_activity.strftime('%Y-%m-%d %H:%M:%S') if employee.last_activity else None,
             # Add other fields as needed
         }
-        data.append(hodim_data)
+        data.append(employee_data)
 
     # Return JSON response
     return JsonResponse(data, safe=False)

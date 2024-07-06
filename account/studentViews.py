@@ -530,7 +530,45 @@ def create_student_from_api(request):
         print("Active university not found.")
         return HttpResponse("Active university not found.", status=404)
 
+def student_list_json(request):
+    students = CustomUser.objects.filter(is_student=True)
 
+    # Prepare JSON data
+    data = []
+    for student in students:
+        student_data = {
+            'id': student.id,
+            'full_name': student.full_name,
+            'email': student.email,
+            'phone_number': student.phone_number,
+            'image': student.imageFile.url if student.imageFile else None,
+            'department': student.department.name if student.department else None,
+            'status': "Active" if student.is_active else "Inactive",
+            'join_date': student.created_at.strftime('%Y-%m-%d'),
+            'birth_date': student.birth_date.strftime('%Y-%m-%d') if student.birth_date else None,
+            'gender': student.gender.name if student.gender else None,
+            'student_id_number': student.student_id_number,
+            'country': student.country.name if student.country else None,
+            'province': student.province.name if student.province else None,
+            'district': student.district.name if student.district else None,
+            'studentStatus': student.studentStatus.name if student.studentStatus else None,
+            'educationForm': student.educationForm.name if student.educationForm else None,
+            'educationType': student.educationType.name if student.educationType else None,
+            'paymentForm': student.paymentForm.name if student.paymentForm else None,
+            'socialCategory': student.socialCategory.name if student.socialCategory else None,
+            'accommodation': student.accommodation.name if student.accommodation else None,
+            'curriculum': student.curriculum.name if student.curriculum else None,
+            'group': student.group.name if student.group else None,
+            'level': student.level.name if student.level else None,
+            'semester': student.semester.name if student.semester else None,
+            'educationYear': student.educationYear.name if student.educationYear else None,
+            'user_type': student.get_user_type_display(),
+            'last_login': student.last_login.strftime('%Y-%m-%d %H:%M:%S'),
+        }
+        data.append(student_data)
+
+    # Return JSON response
+    return JsonResponse(data, safe=False)
 def get_student_info(request):
     try:
         student_id_number = request.GET.get('student_id_number')

@@ -19,6 +19,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://0.0.0.0',
     'http://127.0.0.1',
     'http://172.16.13.168',
+    'https://webtest.namspi.uz',
 ]
 
 

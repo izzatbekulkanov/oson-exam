@@ -1,12 +1,13 @@
 from django.urls import path
 
 from exam.landing_views import about_me, social, contact_me
-from exam.views import employee_dashboard, dashboard, api_key
+from exam.views import employee_dashboard, dashboard, api_key, data_hemis
 
 views_urlpatterns = [
     path('employee_dashboard', employee_dashboard, name='a_dashboard'),
 
     path('api_key', api_key, name='api_key'),
+    path('data_hemis', data_hemis, name='data_hemis'),
 
     path('', dashboard, name='dashboard'),
 ]

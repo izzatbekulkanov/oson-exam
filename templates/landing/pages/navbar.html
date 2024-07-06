@@ -65,10 +65,10 @@
                         <a href="{% url 'dashboard' %}" class="nav-link fw-medium {% if request.get_full_path == '/' %}active{% endif %}">Test</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-medium {% if request.path == '/about_me' %}active{% endif %}" href="{% url 'about_me' %}">Biz haqimizda</a>
+                        <a class="nav-link fw-medium {% if request.path == '/social' %}active{% endif %}" href="{% url 'social' %}">Mening sahifam</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-medium {% if request.path == '/social' %}active{% endif %}" href="{% url 'social' %}">Mening sahifam</a>
+                        <a class="nav-link fw-medium {% if request.path == '/about_me' %}active{% endif %}" href="{% url 'about_me' %}">Biz haqimizda</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link fw-medium {% if request.path == '/contact_me' %}active{% endif %}" href="{% url 'contact_me' %}" href="contact_me">Biz bilan bog'lanish</a>

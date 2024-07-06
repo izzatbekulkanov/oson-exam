@@ -156,13 +156,13 @@ class OAuthCallbackView(APIView):
                         user.hemis_role.add(role_instance)
 
                 # Foydalanuvchini "Guest" guruhiga qo'shish
-                guest_group, created = Group.objects.get_or_create(name='Guest')
+                guest_group, created = Group.objects.get_or_create(name='Employee')
                 user.groups.add(guest_group)
 
                 oauth_login(request, email, user)  # Faydalanuvchini login qiling
 
             # return Response(full_info, status=status.HTTP_200_OK)
-            return redirect('index')
+            return redirect('a_dashboard')
         else:
             return Response(
                 {
